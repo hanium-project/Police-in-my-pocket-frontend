@@ -9,8 +9,7 @@ const LoginApp = () => {
   const [text, onChangeText] = React.useState(null);
   const [number, onChangeNumber] = React.useState(null);
   
-  return (
-    <View style={styles.container}>
+  return (      
       <ImageBackground
         source={require('./login.png')}
         style={{width:width,height: '100%',
@@ -20,35 +19,42 @@ const LoginApp = () => {
       }}
       >
         <TextInput
-          style={styles.input}
+          style={{
+            width: 380,
+            height: 50,
+            padding: 10,
+            marginTop: 340,
+            backgroundColor: '#FFFFFF',
+            borderRadius: 27,
+            fontSize: 18,
+            fontFamily: 'GmarketSansTTFMedium',
+            fontStyle: 'normal',
+          }}
           onChangeText={onChangeText}
           value={text}
           placeholder="ID"
         />
-    <TextInput
-      style={styles.input}
-      onChangeText={onChangeNumber}
-      value={number}
-      placeholder="Password"
-      keyboardType="numeric"
-    />
-    <TouchableHighlight>
-        <View style={styles.button}>
-          <Text style={styles.text}>로그인</Text>
-        </View>
-    </TouchableHighlight>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeNumber}
+          value={number}
+          placeholder="Password"
+        />
+        <TouchableHighlight>
+          <View style={styles.button}>
+            <Text style={styles.text}>로그인</Text>
+          </View>
+        </TouchableHighlight>
       </ImageBackground>
-  </View>
     )
   }
 
   const styles = StyleSheet.create({
     input: {
       width: 380,
-      height: 50,
-      margin: 5,
-      marginTop: 150,
+      height: 45,
       padding: 10,
+      margin: 10,
       backgroundColor: '#FFFFFF',
       borderRadius: 27,
       fontSize: 18,
@@ -58,15 +64,14 @@ const LoginApp = () => {
 
     button: {
       width: 380,
-      height: 55,
-      margin: 7,
-      padding: 10,
+      height: 45,
+      paddingTop: 12,
       backgroundColor: '#5982da',
       borderRadius: 27,
       fontSize: 18,
       fontFamily: 'GmarketSansTTFMedium',
       fontStyle: 'normal',
-      justifyContent: 'center',
+      alignItems: "center"
     },
 
     container: {
