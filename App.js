@@ -1,112 +1,85 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {TextInput, SafeAreaView, StyleSheet, TouchableHighlight, View, Text} from 'react-native';
+import {Dimensions, Image, ImageBackground,} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+var {width} = Dimensions.get('window');
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+const LoginApp = () => {
+  //초기값, 변경값 설정
+  const [text, onChangeText] = React.useState(null);
+  const [number, onChangeNumber] = React.useState(null);
+  
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <View style={styles.container}>
+      <ImageBackground
+        source={require('./login.png')}
+        style={{width:width,height: '100%',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      >
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeText}
+          value={text}
+          placeholder="ID"
+        />
+    <TextInput
+      style={styles.input}
+      onChangeText={onChangeNumber}
+      value={number}
+      placeholder="Password"
+      keyboardType="numeric"
+    />
+    <TouchableHighlight>
+        <View style={styles.button}>
+          <Text style={styles.text}>로그인</Text>
         </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+    </TouchableHighlight>
+      </ImageBackground>
+  </View>
+    )
+  }
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  const styles = StyleSheet.create({
+    input: {
+      width: 380,
+      height: 50,
+      margin: 5,
+      marginTop: 150,
+      padding: 10,
+      backgroundColor: '#FFFFFF',
+      borderRadius: 27,
+      fontSize: 18,
+      fontFamily: 'GmarketSansTTFMedium',
+      fontStyle: 'normal',
+    },
 
-export default App;
+    button: {
+      width: 380,
+      height: 55,
+      margin: 7,
+      padding: 10,
+      backgroundColor: '#5982da',
+      borderRadius: 27,
+      fontSize: 18,
+      fontFamily: 'GmarketSansTTFMedium',
+      fontStyle: 'normal',
+      justifyContent: 'center',
+    },
+
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      backgroundColor: '#709eff',
+    },
+
+    text: {
+      fontSize: 18,
+      fontFamily: 'GmarketSansTTFMedium',
+      color: '#FFFFFF',
+    }
+  });
+
+export default LoginApp;
