@@ -1,111 +1,191 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useState} from 'react';
+import {Platform, View, StyleSheet, TextInput, SafeAreaView, TouchableOpacity, Text, Component} from 'react-native';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import RadioGroup from 'react-native-radio-button-group';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import {ScrollView } from 'react-native';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+var gender = [
+  {value: 'man', label: '남' },
+  {value: 'woman', label: '여' },
+];
+Date.prototype.format = function(f) {
+  if (!this.valueOf()) return " ";
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+  var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+  var d = this;
+   
+  return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+      switch ($1) {
+          case "yyyy": return d.getFullYear();
+          case "yy": return (d.getFullYear() % 1000).zf(2);
+          case "MM": return (d.getMonth() + 1).zf(2);
+          case "dd": return d.getDate().zf(2);
+          case "E": return weekName[d.getDay()];
+          case "HH": return d.getHours().zf(2);
+          case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+          case "mm": return d.getMinutes().zf(2);
+          case "ss": return d.getSeconds().zf(2);
+          case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+          default: return $1;
+      }
+  });
 };
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+Number.prototype.zf = function(len){return this.toString().zf(len);};
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const App = () => {
+  const [id, setId] = useState('')
+  const [password, setPassword] = useState('')
+  const [checkpw, setCheckpw] = useState('')
+  const [name, setName] = useState('')
+  const [birth, setBirth] = useState('')
+  const [address, setAddress] = useState('')
+  const [phone, setPhone] = useState('')
+  const [emergency1, setEmergency1] = useState('')
+  const [emergency2, setEmergency2] = useState('')
+  const [emergency3, setEmergency3] = useState('')
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [text, onChangeText] = useState("");
+  const [value, setValue] = React.useState('first');
+  //const { options, horizontal} = props;
+const showDatePicker = () => {
+    setDatePickerVisibility(true);
+};
 
+const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+};
+
+const handleConfirm = (date) => {
+  hideDatePicker();
+  onChangeText(date.format("yyyy/MM/dd"))
+};
+  const login = (id, password) => {
+    alert(`id: ${id} password: ${password}`);
+  }
+
+  const [checked, setChecked] = React.useState('남');
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView style={styles.container}>
+      <TextInput style={styles.textInput}
+        placeholder = "아이디"
+        label = "아이디"
+        labelStyle={{marginLeft: 10}}
+        placeholderTextColor = "white"
+        onChangeText={text => setId(text)} value={id} />
+      <TextInput style={styles.textInput}
+        placeholder = "비밀번호"
+        placeholderTextColor = "white"
+        onChangeText={text => setPassword(text)} value={password} />
+      <TextInput style={styles.textInput}
+        placeholder = "비밀번호 재확인"
+        placeholderTextColor = "white"
+        onChangeText={text => setCheckpw(text)} value={checkpw} />
+      <TextInput style={styles.textInput}
+        placeholder = "이름"
+        placeholderTextColor = "white"
+        onChangeText={text => setName(text)} value={name} />
+    <View>
+        <TouchableOpacity onPress={showDatePicker}>
+            <TextInput style={styles.textInput}
+                pointerEvents="none"
+                placeholder="생년월일"
+                placeholderTextColor= "white"
+                underlineColorAndroid="transparent"
+                editable={false}
+                value={text}
+            />
+            <DateTimePickerModal
+                headerTextIOS="생년월일"
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+            />
+        </TouchableOpacity>
+    </View>
+    <View>
+      <RadioForm
+        radio_props = {gender}
+        initial={0}
+        onPress={(value) => {}} 
+        buttonSize={15}
+        buttonOuterSize={15}
+        selectedButtonColor={'white'}
+        labelStyle={{fontSize: 15, }}
+        disable={true}
+        formHorizontal={true}
+      />
+      </View>
+      <TextInput style={styles.textInput}
+        placeholder = "주소"
+        placeholderTextColor = "white"
+        onChangeText={text => setAddress(text)} value={address} />
+
+      <TextInput style={styles.textInput}
+        placeholder = "휴대전화"
+        placeholderTextColor = "white"
+        onChangeText={text => setPhone(text)} value={phone} />
+
+      <TextInput style={styles.textInput}
+        placeholder = "비상연락처1"
+        placeholderTextColor = "white"
+        onChangeText={text => setEmergency1(text)} value={emergency1} />
+
+      <TextInput style={styles.textInput}
+        placeholder = "비상연락처2"
+        placeholderTextColor = "white"
+        onChangeText={text => setEmergency2(text)} value={emergency2} />
+
+      <TextInput style={styles.textInput}
+        placeholder = "비상연락처3"
+        placeholderTextColor = "white"
+        onChangeText={text => setEmergency3(text)} value={emergency3} />
+
+        <TouchableOpacity
+        style= {styles.submitButton}
+        onPress = {
+          () => login(email, password)
+        }>
+          <Text style = {styles.submitButtonText}>Submit</Text>  
+        </TouchableOpacity>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#6799FF',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+
+  textInput: {
+    margin: 15,
+   // height: 40,
+    borderColor: 'white',
+    borderWidth: 1,
+    color: 'white',
+    flexWrap: 'wrap',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  submitButton: {
+    backgroundColor: '#043BFF',
+    padding: 10,
+    margin: 15,
+    alignItems: "center",
+   // height: 40
   },
-  highlight: {
-    fontWeight: '700',
+  radio: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    marginRight: 10,
+  },
+  submitButtonText: {
+    color: 'white'
   },
 });
 

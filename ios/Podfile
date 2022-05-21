@@ -4,7 +4,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '11.0'
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'police_in_my_pocket_frontend' do
+target 'Police_in_my_pocket' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -19,7 +19,7 @@ target 'police_in_my_pocket_frontend' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'police_in_my_pocket_frontendTests' do
+  target 'Police_in_my_pocketTests' do
     inherit! :complete
     # Pods for testing
   end

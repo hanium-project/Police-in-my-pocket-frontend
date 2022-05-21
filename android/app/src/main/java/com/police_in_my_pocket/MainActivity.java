@@ -1,4 +1,4 @@
-package com.police_in_my_pocket_frontend;
+package com.police_in_my_pocket;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "police_in_my_pocket_frontend";
+    return "Police_in_my_pocket";
   }
 
   /**
