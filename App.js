@@ -38,20 +38,20 @@ String.prototype.zf = function(len){return "0".string(len - this.length) + this;
 Number.prototype.zf = function(len){return this.toString().zf(len);};
 
 const App = () => {
+  const [titleText, setTitleText] = useState("회원가입");
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   const [checkpw, setCheckpw] = useState('')
   const [name, setName] = useState('')
   const [birth, setBirth] = useState('')
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [address, setAddress] = useState('')
   const [phone, setPhone] = useState('')
   const [emergency1, setEmergency1] = useState('')
   const [emergency2, setEmergency2] = useState('')
   const [emergency3, setEmergency3] = useState('')
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [text, onChangeText] = useState("");
-  const [value, setValue] = React.useState('first');
-  //const { options, horizontal} = props;
+
 const showDatePicker = () => {
     setDatePickerVisibility(true);
 };
@@ -71,6 +71,13 @@ const handleConfirm = (date) => {
   const [checked, setChecked] = React.useState('남');
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.header}>
+      <Text style={styles.titleText}>
+       {"\n"}
+        {titleText}
+        {"\n"}
+      </Text>
+      </View>
       <TextInput style={styles.textInput}
         placeholder = "아이디"
         label = "아이디"
@@ -80,11 +87,13 @@ const handleConfirm = (date) => {
       <TextInput style={styles.textInput}
         placeholder = "비밀번호"
         placeholderTextColor = "white"
-        onChangeText={text => setPassword(text)} value={password} />
+        onChangeText={text => setPassword(text)} value={password} 
+        secureTextEntry={true}/>
       <TextInput style={styles.textInput}
         placeholder = "비밀번호 재확인"
         placeholderTextColor = "white"
-        onChangeText={text => setCheckpw(text)} value={checkpw} />
+        onChangeText={text => setCheckpw(text)} value={checkpw} 
+        secureTextEntry={true}/>
       <TextInput style={styles.textInput}
         placeholder = "이름"
         placeholderTextColor = "white"
@@ -148,8 +157,14 @@ const handleConfirm = (date) => {
 
         <TouchableOpacity
         style= {styles.submitButton}
-        onPress = {
-          () => login(email, password)
+        onPress = {() => login(email, password),
+        () =>{
+          if(password === checkpw){
+          }
+          else{
+            return alert("비밀번호가 일치하지 않습니다");
+          }
+        }
         }>
           <Text style = {styles.submitButtonText}>Submit</Text>  
         </TouchableOpacity>
@@ -162,10 +177,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#6799FF',
   },
-
+  header:{
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: 'white',
+  },
   textInput: {
     margin: 15,
-   // height: 40,
     borderColor: 'white',
     borderWidth: 1,
     color: 'white',
@@ -176,7 +198,6 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 15,
     alignItems: "center",
-   // height: 40
   },
   radio: {
     flexDirection: 'row',
