@@ -1,6 +1,7 @@
 import React from 'react';
 import {TextInput, SafeAreaView, StyleSheet, TouchableHighlight, View, Text} from 'react-native';
 import {Dimensions, Image, ImageBackground,} from 'react-native';
+import { Linking } from 'react-native';
 
 var {width} = Dimensions.get('window');
 
@@ -23,7 +24,7 @@ const LoginApp = () => {
             width: 380,
             height: 50,
             padding: 10,
-            marginTop: 340,
+            marginTop: 350,
             backgroundColor: '#FFFFFF',
             borderRadius: 27,
             fontSize: 18,
@@ -39,12 +40,31 @@ const LoginApp = () => {
           onChangeText={onChangeNumber}
           value={number}
           placeholder="Password"
+          secureTextEntry={true}
         />
         <TouchableHighlight>
           <View style={styles.button}>
             <Text style={styles.text}>로그인</Text>
           </View>
         </TouchableHighlight>
+        <Text>&nbsp;</Text>
+        <View style={{
+          flexDirection: 'row',
+        }}>
+          <Text onPress={() => Linking.openURL('https://www.google.co.kr/')}
+            style={{
+              fontFamily: 'GmarketSansTTFMedium',
+              color: '#FFFFFF',
+              fontSize: 15,
+              textDecorationLine: 'underline'}}>회원가입</Text> 
+              <Text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Text>
+          <Text onPress={() => Linking.openURL('https://www.google.co.kr/')}
+            style={{
+              fontFamily: 'GmarketSansTTFMedium',
+              color: '#FFFFFF',
+              fontSize: 15,
+              textDecorationLine: 'underline'}}>아이디/비밀번호 찾기</Text>
+        </View>
       </ImageBackground>
     )
   }
