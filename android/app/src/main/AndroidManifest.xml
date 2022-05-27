@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.police_in_my_pocket_frontend">
+  package="com.main">
 
     <uses-permission android:name="android.permission.INTERNET" />
 

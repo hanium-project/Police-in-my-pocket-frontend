@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "police_in_my_pocket_frontend.app"
-               BlueprintName = "police_in_my_pocket_frontend"
-               ReferencedContainer = "container:police_in_my_pocket_frontend.xcodeproj">
+               BuildableName = "main.app"
+               BlueprintName = "main"
+               ReferencedContainer = "container:main.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "police_in_my_pocket_frontendTests.xctest"
-               BlueprintName = "police_in_my_pocket_frontendTests"
-               ReferencedContainer = "container:police_in_my_pocket_frontend.xcodeproj">
+               BuildableName = "mainTests.xctest"
+               BlueprintName = "mainTests"
+               ReferencedContainer = "container:main.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "police_in_my_pocket_frontend.app"
-            BlueprintName = "police_in_my_pocket_frontend"
-            ReferencedContainer = "container:police_in_my_pocket_frontend.xcodeproj">
+            BuildableName = "main.app"
+            BlueprintName = "main"
+            ReferencedContainer = "container:main.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "police_in_my_pocket_frontend.app"
-            BlueprintName = "police_in_my_pocket_frontend"
-            ReferencedContainer = "container:police_in_my_pocket_frontend.xcodeproj">
+            BuildableName = "main.app"
+            BlueprintName = "main"
+            ReferencedContainer = "container:main.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
