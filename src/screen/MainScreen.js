@@ -20,7 +20,15 @@ const MainScreen = () => {
               style={{ width: '90%', height: '100%', }} 
               provider={PROVIDER_GOOGLE}
               initialRegion={{ latitude: 37.601948, longitude: 127.041518, latitudeDelta: 0.008, longitudeDelta: 0.008, }} 
-            ></MapView>
+            >
+            {/**초기 설정한 위도 경도에 마커 표시 */}
+            <MapView.Marker
+              coordinate={{latitude: 37.601948,
+              longitude: 127.041518}}
+              title={"title"}
+              description={"description"}
+            />
+        </MapView>
       </View>
       <View style={styles.footer}>
         <Text style ={{color:'#FFFFFF', alignItems:'center', paddingBottom:5, fontFamily:'GmarketSansTTFMedium'}} >안심귀가를 시작하겠습니까?</Text>
