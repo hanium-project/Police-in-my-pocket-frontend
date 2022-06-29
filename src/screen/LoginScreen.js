@@ -45,7 +45,7 @@ const LoginApp = ({ navigation }) => {
         />
         <TouchableHighlight>
           <View style={styles.button}>
-            <Text style={styles.text}>로그인</Text>
+            <Text style={styles.text}  onPress={() => navigation.navigate('Menu')}>로그인</Text>
           </View>
         </TouchableHighlight>
         <Text>&nbsp;</Text>
