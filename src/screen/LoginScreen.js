@@ -2,17 +2,18 @@ import React from 'react';
 import {TextInput, SafeAreaView, StyleSheet, TouchableHighlight, View, Text} from 'react-native';
 import {Dimensions, Image, ImageBackground,} from 'react-native';
 import { Linking } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 var {width} = Dimensions.get('window');
 
-const LoginApp = () => {
+const LoginApp = ({ navigation }) => {
   //초기값, 변경값 설정
   const [text, onChangeText] = React.useState(null);
   const [number, onChangeNumber] = React.useState(null);
   
   return (      
       <ImageBackground
-        source={require('./login.png')}
+        source={require('../../assets/imgs/login.png')}
         style={{width:width,height: '100%',
         flex: 1,
         justifyContent: 'center',
@@ -51,7 +52,7 @@ const LoginApp = () => {
         <View style={{
           flexDirection: 'row',
         }}>
-          <Text onPress={() => Linking.openURL('https://www.google.co.kr/')}
+          <Text onPress={() => navigation.navigate('Signup')}
             style={{
               fontFamily: 'GmarketSansTTFMedium',
               color: '#FFFFFF',
