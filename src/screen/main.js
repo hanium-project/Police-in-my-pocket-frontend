@@ -5,7 +5,7 @@ import MyButton from '../component/MyButton';
 import SearchBar1 from '../component/SearchBar1';
 import SearchBar2 from '../component/SearchBar2';
 
-const App = () => {
+const MainScreen = () => {
   return (
     <View style = {styles.container}>
       <View style = {styles.header}>
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
  
-export default App;
+export default MainScreen;

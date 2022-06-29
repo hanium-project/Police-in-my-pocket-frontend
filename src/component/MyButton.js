@@ -3,7 +3,7 @@ import {Text, Pressable, StyleSheet, Alert} from 'react-native';
 import Sound from 'react-native-sound';
 
 let controlLocal;
-let localSound = require('../siren.mp3');
+let localSound = require('../../assets/sound/siren.mp3');
 
 const playSound_Local = () => {
  controlLocal = new Sound(localSound, (error, _sound) => {
