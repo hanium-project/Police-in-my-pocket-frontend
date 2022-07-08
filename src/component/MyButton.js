@@ -47,10 +47,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#043BFF',
         padding: 10,
-        borderRadius:15
+        borderRadius:27,
+        width: 300,
+        height: 40
       },
       buttonText: {
-        fontSize: 25,
+        fontSize: 15,
         color: '#FFFFFF',
         marginLeft: 11,
         marginRight: 11,
