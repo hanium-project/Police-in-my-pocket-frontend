@@ -5,10 +5,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-=======
->>>>>>> 9bd8ea32b4890538f747ad2fc5d7c5f872d8bfd5
 
     <application
         android:usesCleartextTraffic="true"
