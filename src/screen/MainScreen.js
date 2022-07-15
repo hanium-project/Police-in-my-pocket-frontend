@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity, Modal, Pressable} from 'react-native';
 import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
@@ -24,6 +24,7 @@ async function requestPermission() {
 }
 
 const MainScreen = ({navigation}) => {
+  const [modalOpen, setModalOpen] = useState(false);
   const [location, setLocation] = useState();
 useEffect(() => {
   requestPermission().then(result => {
@@ -84,7 +85,8 @@ if (!location) {
       <View style={{
         width: '90%',
       }}>
-      <Text style={{
+      <TouchableOpacity onPress={() => setModalOpen(true)}>      
+        <Text style={{
               alignSelf: 'flex-end',
               fontSize: 11,
               color: '#ffffff',
@@ -93,8 +95,35 @@ if (!location) {
               borderBottomColor: 'white',
               borderBottomWidth: 1
             }}>
-      자주 이용하는 목적지 불러오기
-      </Text>
+        자주 이용하는 목적지 불러오기
+        </Text>
+        <Modal visible={modalOpen}
+          animationType={"fade"}
+          transparent={true}
+          style={styles.modalBox}
+          onRequestClose={() => { //backbutton으로 modal을 닫는 기능
+            setModalOpen(false);
+          }}>
+          <View style={styles.modalBox}>
+            <View style={styles.modalContent}>
+              <View style={{flexDirection: 'row', width: '90%', flex: 0.5}}>
+                <Text style={styles.modalTitle}>자주 사용하는 목적지</Text>
+                <Pressable style={styles.btn} onPress={() => setModalOpen(false)}>
+                  <Text style={styles.modalText}>닫기</Text>
+                </Pressable>
+              </View>
+              <View style={{flex: 3}}>
+
+              </View>
+              <View style={{alignItems: 'center', width: '90%', flex: 0.5}}>
+                <Pressable style={styles.btn2} onPress={() => setModalOpen(false)}>
+                    <Text style={styles.modalText}>등록</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+      </Modal>
+      </TouchableOpacity>
       </View>
   
       <View style={styles.content1}>
@@ -174,13 +203,11 @@ const styles = StyleSheet.create({
   content1: {
     width: '100%',
     height: '9%',
-    //backgroundColor: 'yellow',
     flexDirection: 'row',
   },
   content: {
     width: '90%',
     height: '60%',
-    //backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
@@ -190,7 +217,6 @@ const styles = StyleSheet.create({
   footer: {
     width: '100%',
     height: '15%',
-    //backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -201,6 +227,56 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontFamily: 'GmarketSansTTFMedium',
   },
+  modalText: {
+    fontSize: 15,
+    color: '#FFFFFF',
+    marginLeft: 11,
+    marginRight: 11,
+    marginTop: 3,
+    marginBottom: 3,
+    fontFamily: 'GmarketSansTTFMedium',
+  }, 
+  btn: {
+    alignItems: 'center',
+    backgroundColor: '#043BFF',
+    padding: 10,
+    borderRadius:27,
+    width: 75,
+    height: 40,
+    marginTop: 10,
+    marginRight: 10,
+    marginLeft: 85
+  },
+  btn2: {
+    alignItems: 'center',
+    backgroundColor: '#043BFF',
+    padding: 10,
+    borderRadius:27,
+    width: 75,
+    height: 40,
+  }, 
+  modalBox: {
+    margin: 0,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(102, 102, 102, 0.8)'
+  },
+  modalTitle: {
+    alignSelf: 'flex-start',
+    fontSize: 18,
+    color: '#043BFF',
+    marginTop: 20,
+    fontFamily: 'GmarketSansTTFMedium',
+  },
+  modalContent: {
+    width: '90%',
+    height: '60%',
+    alignItems: 'center',
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: 'white',
+  }
 });
 
 export default MainScreen;

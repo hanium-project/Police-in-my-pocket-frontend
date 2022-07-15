@@ -18,7 +18,7 @@ function SearchBar1() {
                     console.log(data, details);
                 }}
                 query={{
-                    key: 'AIzaSyAx0vC5rUuV7PT72y03BDwK79Yu2ByP3Hw',
+                    key: 'AIzaSyDdba0lnMZrMDxRiWpBsZXdT_H_VTrdWMI',
                     language: 'en',
                 }}
             />  
