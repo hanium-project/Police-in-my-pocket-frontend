@@ -20,7 +20,7 @@ import RadioForm, {
 import {ScrollView} from 'react-native';
 
 var gender = [
-  {value: 'man', label: '남'},
+  {value: 'man', label: '남  '},
   {value: 'woman', label: '여'},
 ];
 Date.prototype.format = function (f) {
@@ -194,10 +194,11 @@ const App = () => {
           labelStyle={{
             fontSize: 15,
             fontFamily: 'GmarketSansTTFMedium',
-            marginLeft: 30,
+            marginLeft: -5,
           }}
           disable={true}
           formHorizontal={true}
+          style={styles.RadioForm}
         />
       </View>
       <TextInput
@@ -267,6 +268,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  RadioForm: {
+    marginLeft: 15
   },
   titleText: {
     fontSize: 20,
