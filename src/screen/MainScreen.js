@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity, Modal, Pressable} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity, Modal, Pressable, Platform} from 'react-native';
 import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
 import MyButton from '../component/MyButton';
 import SearchBar1 from '../component/SearchBar1';
 import SearchBar2 from '../component/SearchBar2';
+import { ScrollView } from 'react-native-gesture-handler';
+import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 
 async function requestPermission() {
   try {
@@ -56,41 +58,33 @@ if (!location) {
 }
 
   return (
+    //<ScrollView contentContainerStyle={{flex:1}}>
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text
-          style={{
-            alignSelf: 'flex-start',
-            fontSize: 12,
-            color: '#ffffff',
-            marginBottom: 10,
-            fontFamily: 'GmarketSansTTFMedium',
-          }}>
-          내 손안의 작은 경호원
-        </Text>
-
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width: '100%',
+              height: 20,
+              marginLeft: 10,
+              marginTop: 10,
+              }}>
           <Text style={styles.title}>Police In My Pocket 안심귀가 서비스</Text>
           <Image
             source={require('../../assets/imgs/police-car.png')}
             style={{
-              width: 30,
-              height: 30,
-              marginLeft: 10,
+              width: 25,
+              height: 18,
+              marginLeft: 8,
             }}
           />
         </View>
       </View>
 
-      <View style={{
-        width: '90%',
-      }}>
+      <View style={{ width: '90%', }}>
       <TouchableOpacity onPress={() => setModalOpen(true)}>      
         <Text style={{
               alignSelf: 'flex-end',
               fontSize: 11,
               color: '#ffffff',
-              marginBottom: 10,
+              marginTop: 14,
               fontFamily: 'GmarketSansTTFMedium',
               borderBottomColor: 'white',
               borderBottomWidth: 1
@@ -154,6 +148,20 @@ if (!location) {
               longitude: location.longitude}}
               title={"현재 위치"}
               draggable={true}
+              onPress={() => {
+                  fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.latitude + ',' + location.longitude
+                  + '&key=AIzaSyAx0vC5rUuV7PT72y03BDwK79Yu2ByP3Hw' + '&language=ko')
+                .then((response) => response.json())
+                .then((responseJson) => {
+                  console.log(responseJson.results[0].formatted_address);
+                }).catch((err) => console.log("udonPeople error : " + err));
+              }}
+              onDragStart={(e) => {
+                console.log("Drag start", e.nativeEvent.coordinates)
+              }}
+              onDragSEnd={(e) => {
+                console.log("Drag end", e.nativeEvent.coordinates)
+              }}
           />
           <Circle
             center={{latitude: location.latitude,
@@ -178,21 +186,23 @@ if (!location) {
         <MyButton />
       </View>
     </View>
+    //</ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 8,
+    padding: 0,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#6799FF',
   },
   header: {
     width: '100%',
-    height: '10%',
+    height: '5%',
     //backgroundColor: 'blue',
+    alignSelf: 'flex-start',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -201,20 +211,22 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   content1: {
+    //backgroundColor: 'green',
     width: '100%',
-    height: '9%',
-    flexDirection: 'row',
+    height: '20%',
   },
   content: {
     width: '90%',
-    height: '60%',
+    height: '55%',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
     overflow: 'hidden',
     backgroundColor: 'white',
+    marginTop: 4
   },
   footer: {
+    //backgroundColor: 'blue',
     width: '100%',
     height: '15%',
     alignItems: 'center',
@@ -222,9 +234,9 @@ const styles = StyleSheet.create({
   },
   title: {
     alignSelf: 'flex-start',
-    fontSize: 15,
+    fontSize: 16,
     color: '#ffffff',
-    marginBottom: 10,
+    marginBottom: 3,
     fontFamily: 'GmarketSansTTFMedium',
   },
   modalText: {
