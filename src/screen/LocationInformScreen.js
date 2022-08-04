@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE, } from 'react-native-maps';
 import styled from 'styled-components';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import { GlobalStyleComponent } from 'styled-components';
 
 const ViewContainerMap = styled.View`
   flex: 1;
@@ -41,6 +40,20 @@ const CountCustomFont = styled.Text`
   color: black;
 `
 
+const safeRegion = {
+  latitude: 37.78888, 
+  longitude: -122.4350,
+  latitudeDelta: 0.005,
+  longitudeDelta: 0.005,
+}
+
+const dangerRegion = {
+  latitude: 37.79000, 
+  longitude: -122.4324,
+  latitudeDelta: 0.005,
+  longitudeDelta: 0.005,
+}
+
 async function requestPermission() {
   try {
     if (Platform.OS === "ios") {
@@ -57,10 +70,10 @@ async function requestPermission() {
   }
 }
 
-
-
 const MapExample = ({navigation}) => {
   const [location, setLocation] = useState();
+  const changeLocation = useRef(null);
+
   useEffect(() => {
     requestPermission().then(result => {
       console.log({ result });
@@ -82,6 +95,13 @@ const MapExample = ({navigation}) => {
     });
   }, []);
 
+  const goToSafeArea = () => {
+    changeLocation.current.animateToRegion(safeRegion, 1 * 1000);
+  }
+
+  const goToDangerArea = () => {
+    changeLocation.current.animateToRegion(dangerRegion, 1 * 1000);
+  }
 
 
   return (
@@ -136,11 +156,14 @@ const MapExample = ({navigation}) => {
             width: '95%',
             marginLeft: '2.7%'
           }}>
-            <MapView
+            <MapView.Animated
               style={{
                 width: '100%',
                 height: '87%',
               }}
+              ref={changeLocation}
+              showsMyLocationButton={true}
+              showsUserLocation={true}
               provider={PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: 37.78825,
@@ -172,7 +195,7 @@ const MapExample = ({navigation}) => {
               >
                 <Image source={require('../../assets/imgs/placeholder_safe.png')} style={{ width: 40, height: 40 }}></Image>
               </Marker>
-            </MapView>
+            </MapView.Animated>
           </View>
       </ViewContainerMap>
       <View style={{flexDirection: 'row', backgroundColor: '#709eff',}}>
@@ -207,7 +230,7 @@ const MapExample = ({navigation}) => {
             marginTop: '2%',
             marginBottom: '4%',
           }}>
-            <TouchableOpacity onPress={() => console.log('safe location click')} style={{flexDirection: 'row',}}>
+            <TouchableOpacity onPress={() => goToSafeArea()} style={{flexDirection: 'row',}}>
                 <Image source={require('../../assets/imgs/placeholder_safe.png')}
                     style={{
                         width: 50,
@@ -218,7 +241,7 @@ const MapExample = ({navigation}) => {
                     <CountCustomFont>치안 시설</CountCustomFont>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log('danger location click')} style={{flexDirection: 'row',}}>
+            <TouchableOpacity onPress={() => goToDangerArea()} style={{flexDirection: 'row',}}>
                 <Image source={require('../../assets/imgs/placeholder_danger.png')}
                     style={{
                         width: 50,
