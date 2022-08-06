@@ -3,7 +3,7 @@ import {Text, Pressable, StyleSheet, Alert} from 'react-native';
 import Sound from 'react-native-sound';
 
 let controlLocal;
-let localSound = require('../../assets/sound/siren.mp3');
+let localSound = require('../../assets/sounds/siren.mp3');
 
 const playSound_Local = () => {
  controlLocal = new Sound(localSound, (error, _sound) => {
@@ -47,10 +47,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#043BFF',
         padding: 10,
-        borderRadius:15
+        borderRadius:27,
+        width: 300,
+        height: 40
       },
       buttonText: {
-        fontSize: 25,
+        fontSize: 15,
         color: '#FFFFFF',
         marginLeft: 11,
         marginRight: 11,
