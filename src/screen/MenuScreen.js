@@ -226,7 +226,8 @@ const MapExample = ({navigation}) => {
             }}></Image>
           <ButtonCustomFont>안심 귀가 서비스 이용하기</ButtonCustomFont>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}
+        onPress={() => navigation.navigate('Address')}>
           <Image
             source={require('../../assets/imgs/open-book.png')}
             style={{
