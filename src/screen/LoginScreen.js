@@ -75,7 +75,7 @@ const LoginApp = ({navigation}) => {
         </Text>
         <Text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Text>
         <Text
-          onPress={() => Linking.openURL('https://www.google.co.kr/')}
+        onPress={() => navigation.navigate('Find')}
           style={{
             fontFamily: 'GmarketSansTTFMedium',
             color: '#FFFFFF',
