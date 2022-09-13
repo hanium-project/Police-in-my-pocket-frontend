@@ -70,13 +70,13 @@ useEffect(() => {
 
 
 
-if (!location) {
+/*if (!location) {
   return (
     <View>
       <Text>Splash Screen</Text>
     </View>
   );
-}
+}*/
 
   return (
     <View style={styles.container} onPress={Keyboard.dismiss}>
