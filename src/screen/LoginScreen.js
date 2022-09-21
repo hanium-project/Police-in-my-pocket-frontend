@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import {
   TextInput,
-  SafeAreaView,
   StyleSheet,
   TouchableHighlight,
   View,
   Text,
 } from 'react-native';
 import {Dimensions, Image, ImageBackground} from 'react-native';
-import {Linking} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+
 
 var {width} = Dimensions.get('window');
 
@@ -18,28 +15,6 @@ const LoginApp = ({navigation}) => {
   //초기값, 변경값 설정
   const [text, onChangeText] = React.useState(null);
   const [number, onChangeNumber] = React.useState(null);
-
-  function login() {
-    if (id.trim() === "") {
-      Alert.alert("아이디 입력 확인", "아이디가 입력되지 않았습니다.");
-    } else if (password.trim() === "") {
-      Alert.alert("비밀번호 입력 확인", "비밀번호가 입력되지 않았습니다.");
-    } else {
-      axios.post("http://192.168.35.149:3000//users/signup", 
-      null, 
-      { params: {id: id, pwd: password} }
-    ).then(function(resp) {
-      console.log(resp.data);
-      if (resp.data !== null && resp.data != "") {
-        console.log("로그인 성공");
-      } else {
-        Alert.alert("로그인 실패", "아이디나 비밀번호를 확인하세요.");
-      }
-    }).catch(function(err) {
-      console.log(`Error Message: ${err}`);
-    })
-  }
-}
 
   return (
     <ImageBackground
@@ -74,7 +49,7 @@ const LoginApp = ({navigation}) => {
         placeholder="Password"
         secureTextEntry={true}
       />
-      <TouchableHighlight onPress={() => login()}>
+      <TouchableHighlight>
         <View style={styles.button}>
           <Text style={styles.text} onPress={() => navigation.navigate('Menu')}>
             로그인

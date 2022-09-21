@@ -19,24 +19,17 @@ export default function App() {
   
   return (
     <NavigationContainer>
-<<<<<<< HEAD
-      <Stack.Navigator initialRouteName="Menu">
-=======
-           <Stack.Navigator initialRouteName="Login">
->>>>>>> c53a794a84d5cd6ee13ad598428a1402d2cb2368
+        <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} options={{headerShown: false,}}/>
         <Stack.Screen name="Main" component={Main} options={{headerShown: false,}}/>
         <Stack.Screen name="Signup" component={Signup} options={{headerShown: false,}}/>
         <Stack.Screen name="Menu" component={Menu} options={{headerShown: false,}}/>
         <Stack.Screen name="Find" component={Find} options={{headerShown: false,}}/>
         <Stack.Screen name="Location" component={Location} options={{headerShown: false,}}/>
-<<<<<<< HEAD
         <Stack.Screen name="ReportModal" component={ReportModal} options={{headerShown: false,}}/>
-=======
         <Stack.Screen name="MyPage" component={MyPage} options={{headerShown: false,}}/>
         <Stack.Screen name="EditInfo" component={EditInfo} options={{headerShown: false,}}/>
         <Stack.Screen name="EditPw" component={EditPw} options={{headerShown: false,}}/>
->>>>>>> c53a794a84d5cd6ee13ad598428a1402d2cb2368
       </Stack.Navigator>
     </NavigationContainer>
   );
