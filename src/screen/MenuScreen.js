@@ -4,6 +4,9 @@ import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import styled from 'styled-components';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import Mypage from './MyPageScreen';
+import Sound from 'react-native-sound';
 
 const ViewContainerMap = styled.View`
   flex: 1.1;
@@ -62,9 +65,30 @@ async function requestPermission() {
   }
 }
 
-
-
 const MapExample = ({navigation}) => {
+
+  let controlLocal;
+  let localSound = require('../../assets/sounds/siren.mp3');
+  
+  const playSound_Local = () => {
+   controlLocal = new Sound(localSound, (error, _sound) => {
+     if (error) {
+       alert('error' + error.message);
+       return;
+     }
+     controlLocal.play(() => {
+       controlLocal.release();
+     });
+   });
+  }
+  
+  const stopSound_Local = () => { 
+      controlLocal.stop(() => {
+        controlLocal.setVolume(0.0);
+        console.log('Stop Playing...');
+      });
+  }
+  
   const [location, setLocation] = useState();
   useEffect(() => {
     requestPermission().then(result => {
@@ -98,7 +122,7 @@ const MapExample = ({navigation}) => {
               color: 'white',
               marginTop: 10,
               fontSize: 13,
-              marginLeft: 240
+              marginLeft: 200
             }}>OOO님, 환영합니다.</Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={{
@@ -106,21 +130,22 @@ const MapExample = ({navigation}) => {
                 color: 'white',
                 marginTop: 5,
                 fontSize: 10,
-                marginLeft: 241
+                marginLeft: 200
             }}>로그아웃 </Text>
             <Text style={{
                 fontFamily:'GmarketSansTTFMedium',
                 color: 'white',
                 marginTop: 5,
                 fontSize: 10,
-            }}>마이페이지</Text>
+            }} onPress={() => navigation.navigate('MyPage')}>마이페이지</Text>
           </View>
         </View>
         <Image source={require('../../assets/imgs/user2.png')}
           style={{
             width: 30,
             height: 30,
-            marginTop: 10
+            marginTop: 10,
+            marginLeft: -2
           }}></Image>
       </View>
       <ViewContainerMap>
@@ -205,7 +230,7 @@ const MapExample = ({navigation}) => {
           </View>
       </ViewContainerMap>
       <ViewContainerButton>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}     onPress={playSound_Local}>
           <Image
             source={require('../../assets/imgs/siren.png')}
             style={{
@@ -213,10 +238,9 @@ const MapExample = ({navigation}) => {
               height: 30,
               marginLeft: 5,
             }}></Image>
-          <ButtonCustomFont>긴급상황 발생! 인근 파출소 혹은 가족에게 신고하기</ButtonCustomFont>
+        <ButtonCustomFont style={{fontSize: 12.6}}>긴급상황 발생! 인근 파출소 혹은 가족에게 신고하기</ButtonCustomFont>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}
-        onPress={() => navigation.navigate('Main')}>
+        <TouchableOpacity style={styles.button}>
           <Image
             source={require('../../assets/imgs/police-car.png')}
             style={{
