@@ -2,36 +2,28 @@ import React, {useState, useRef} from 'react';
 import {StyleSheet, Text, View, Pressable, Modal, Image, TouchableOpacity, TextInput} from 'react-native';
 import MyButton from './MyButton';
 
-const ReportModal = ({navigation}) => {
-    const [modalOpen, setModalOpen] = useState(false);
+const ReportModal = ({navigation, modalFunction}) => {
+    const [modalOpen, setModalOpen] = useState(true);
+
+    modalFunction(modalOpen);
 
     return (
-        <TouchableOpacity onPress={() => setModalOpen(true)}> 
-        <View style={styles.button}>
-        <Image
-            source={require('../../assets/imgs/siren.png')}
-            style={{
-              width: 30,
-              height: 30,
-              marginLeft: 5,
-            }}></Image>
-            <Text style={styles.title}>긴급상황 발생! 인근 파출소 혹은 가족에게 신고하기</Text>
-        </View>
-            <Modal visible={modalOpen}
+      <View>
+        <Modal visible={modalOpen}
                 animationType={"fade"}
                 transparent={true}
                 style={styles.modalBox}
                 onRequestClose={() => { //backbutton으로 modal을 닫는 기능
                 setModalOpen(false);
             }}>
-            <View style={styles.modalBox}>
-              <View style={styles.modalContent}>
-                <View style={{flexDirection: 'row', width: '90%', flex: 0.5}}>
-                  <Text style={styles.modalTitle}>신고하기</Text>
-                  <Pressable style={styles.btn} onPress={() => setModalOpen(false)}>
-                    <Text style={styles.modalText}>닫기</Text>
-                  </Pressable>
-                </View>
+        <View style={styles.modalBox}>
+            <View style={styles.modalContent}>
+            <View style={{flexDirection: 'row', width: '90%', flex: 0.5}}>
+            <Text style={styles.modalTitle}>신고하기</Text>
+            <Pressable style={styles.btn} onPress={() => setModalOpen(false)}>
+            <Text style={styles.modalText}>닫기</Text>
+            </Pressable>
+        </View>
 
                 <Pressable style={styles.modalAddressBox}>
                     <Text style={styles.modalText}>
@@ -53,11 +45,10 @@ const ReportModal = ({navigation}) => {
                 <View style={{alignItems: 'center', width: '90%', flex: 0.5}}>
                     <MyButton/>
                 </View>
-
               </View>
             </View>
          </Modal>
-        </TouchableOpacity>
+      </View>
     );
   };
  

@@ -133,6 +133,7 @@ useEffect(() => {
                     rankby: 'distance',
                     radius: 420,
                     location: `${location.latitude}, ${location.longitude}`
+                    //location: `37.78825, -122.4324``
                 }}
                 renderDescription={row => row.description}
                 styles={{
