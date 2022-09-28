@@ -1,15 +1,13 @@
 import React from 'react';
 import {
   TextInput,
-  SafeAreaView,
   StyleSheet,
   TouchableHighlight,
   View,
   Text,
 } from 'react-native';
 import {Dimensions, Image, ImageBackground} from 'react-native';
-import {Linking} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+
 
 var {width} = Dimensions.get('window');
 

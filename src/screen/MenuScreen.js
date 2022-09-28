@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import styled from 'styled-components';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import Mypage from './MyPageScreen';
+import ReportModal from '../component/ReportModal';
 import Sound from 'react-native-sound';
 
 const ViewContainerMap = styled.View`
@@ -66,16 +65,21 @@ async function requestPermission() {
 }
 
 const MapExample = ({navigation}) => {
-
+  const [modalOpen, setModalOpen] = useState(false);
   let controlLocal;
   let localSound = require('../../assets/sounds/siren.mp3');
-  
+
+  const modalFunction = (isOpen) => {
+    setModalOpen(isOpen);
+  }
+
   const playSound_Local = () => {
    controlLocal = new Sound(localSound, (error, _sound) => {
      if (error) {
        alert('error' + error.message);
        return;
      }
+      setModalOpen(true)
      controlLocal.play(() => {
        controlLocal.release();
      });
@@ -88,7 +92,7 @@ const MapExample = ({navigation}) => {
         console.log('Stop Playing...');
       });
   }
-  
+
   const [location, setLocation] = useState();
   useEffect(() => {
     requestPermission().then(result => {
@@ -110,8 +114,6 @@ const MapExample = ({navigation}) => {
       }
     });
   }, []);
-
-
 
   return (
     <>
@@ -226,11 +228,14 @@ const MapExample = ({navigation}) => {
                 <Image source={require('../../assets/imgs/placeholder_safe.png')} style={{ width: 40, height: 40 }}></Image>
               </Marker>
             </MapView>
-            
           </View>
       </ViewContainerMap>
       <ViewContainerButton>
-        <TouchableOpacity style={styles.button}     onPress={playSound_Local}>
+        {modalOpen === true ?
+          <ReportModal navigation={navigation} modalFunction={modalFunction}></ReportModal>
+          : null
+        }
+        <TouchableOpacity style={styles.button} onPress={playSound_Local}>
           <Image
             source={require('../../assets/imgs/siren.png')}
             style={{
@@ -240,7 +245,8 @@ const MapExample = ({navigation}) => {
             }}></Image>
         <ButtonCustomFont style={{fontSize: 12.6}}>긴급상황 발생! 인근 파출소 혹은 가족에게 신고하기</ButtonCustomFont>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}
+        onPress={() => navigation.navigate('Main')}>
           <Image
             source={require('../../assets/imgs/police-car.png')}
             style={{

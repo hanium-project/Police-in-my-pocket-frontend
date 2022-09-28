@@ -91,13 +91,15 @@ useEffect(() => {
   ref.current?.setAddressText('');
 }, []);
 
-if (!location) {
+
+
+/*if (!location) {
   return (
     <View>
       <Text>Splash Screen</Text>
     </View>
   );
-}
+}*/
 
   return (
     <View style={styles.container} onPress={Keyboard.dismiss}>
@@ -124,8 +126,94 @@ if (!location) {
       </View>
   
       <View style={styles.content1}>
-        <SearchBar1 reg1={reg1} getData={getData} />
-        <SearchBar2 reg2={reg2} getData2={getData2} />
+      <View style={[styles.block, {width: '90%'}, {height: '63%'}, {marginEnd:'6%'}]} >
+          <GooglePlacesAutocomplete
+                placeholder='▽ 출발지를 입력하세요'
+                minLength={2}
+                returnKeyType={'search'}
+                fetchDetails={true}
+                ref={ref}
+                autoFocus={false}
+                nearbyPlacesAPI='GooglePlacesSearch'
+                onPress={(data, details = null) => {
+                    // 'details' is provided when fetchDetails = true
+                    console.log(data.description);  //한글 주소
+                    console.log(details.geometry.location.lat); //위도 추출
+                    console.log(details.geometry.location.lng); //경도 추출
+
+                    setRegion1({
+                        latitude: details.geometry.location.lat,
+                        longitude: details.geometry.location.lng,
+                        latitudeDelta: 0.011,
+                        longitudeDelta: 0.011
+                    })
+                }}
+                listViewDisplayed={false}
+                query={{
+                    key: 'AIzaSyAx0vC5rUuV7PT72y03BDwK79Yu2ByP3Hw',
+                    language: 'ko',
+                    components: 'country:kor',
+                    rankby: 'distance',
+                    radius: 420,
+                    location: `${location.latitude}, ${location.longitude}`
+                    //location: `37.78825, -122.4324``
+                }}
+                renderDescription={row => row.description}
+                styles={{
+                    listView: {
+                        position: 'absolute',
+                        b4ckgroundColor: "white",
+                        width: '100%',
+                        zIndex: 9999,
+                        marginTop: 45
+                    }
+                  }}
+            />  
+        </View>
+        <View style={[styles.block, {width: '90%'}, {height: '63%'}, {marginEnd:'6%'}, {paddingBottom: 40}]}>
+            <GooglePlacesAutocomplete
+                placeholder='▽ 도착지를 입력하세요'
+                minLength={2}
+                returnKeyType={'search'}
+                fetchDetails={true}
+                ref={ref}
+                autoFocus={false}
+                nearbyPlacesAPI='GooglePlacesSearch'
+                onPress={(data, details = null) => {
+                    // 'details' is provided when fetchDetails = true
+                    console.log(data.description);  //한글 주소
+                    console.log(details.geometry.location.lat); //위도 추출
+                    console.log(details.geometry.location.lng); //경도 추출
+
+                    setRegion2({
+                      latitude: details.geometry.location.lat,
+                      longitude: details.geometry.location.lng,
+                      latitudeDelta: 0.011,
+                      longitudeDelta: 0.011
+                  })
+                }}
+                listViewDisplayed={false}
+                query={{
+                    key: 'AIzaSyAx0vC5rUuV7PT72y03BDwK79Yu2ByP3Hw',
+                    language: 'ko',
+                    components: 'country:kor',
+                    rankby: 'distance',
+                    radius: 420,
+                    location: `${location.latitude}, ${location.longitude}`
+                }}
+                //renderDescription={(data) => console.log(data.description)}
+                renderDescription={row => row.description}
+                styles={{
+                    listView: {
+                        position: 'absolute',
+                        b4ckgroundColor: "white",
+                        width: '100%',
+                        zIndex: 9999,
+                        marginTop: 45
+                    }
+                  }}
+            />  
+        </View>
       </View>
 
       <View style={styles.content}>
