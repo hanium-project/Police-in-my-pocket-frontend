@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ReportModal from '../component/ReportModal';
 import Sound from 'react-native-sound';
+import axios from 'axios';
 
 const ViewContainerMap = styled.View`
   flex: 1.1;
@@ -80,6 +81,7 @@ const MapExample = ({navigation}) => {
        return;
      }
       setModalOpen(true)
+      sendMessage()
      controlLocal.play(() => {
        controlLocal.release();
      });
@@ -94,6 +96,26 @@ const MapExample = ({navigation}) => {
   }
 
   const [location, setLocation] = useState();
+
+  const sendMessage = () => {
+    axios(
+      {
+          url: 'http://10.0.2.2:8080/api/v1/emergency/jjj1111/01024907323',
+          method: 'post',
+          headers: {
+              contentType: 'application/json',
+              Autho
+          }
+      }
+    ).then(function (response) {
+      console.log(response.data);
+      alert('회원가입이 완료되었습니다.');
+    }).catch(function (error) {
+      console.log(error);
+      //alert("fail");
+    });
+  }
+  
   useEffect(() => {
     requestPermission().then(result => {
       console.log({ result });
