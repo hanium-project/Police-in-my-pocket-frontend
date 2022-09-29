@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {StyleSheet, Text, View, Image, Keyboard } from 'react-native';
+import {StyleSheet, Text, View, Image, Keyboard, TouchableOpacity } from 'react-native';
 import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
@@ -7,7 +7,6 @@ import MyButton from '../component/MyButton';
 import ModalView from '../component/ModalView';
 import SearchBar1 from '../component/SearchBar1';
 import SearchBar2 from '../component/SearchBar2';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 async function requestPermission() {
   try {
@@ -25,32 +24,56 @@ async function requestPermission() {
   }
 }
 
-const MainScreen = ({navigation}) => {
-  const [modalOpen, setModalOpen] = useState(false);
+const MainScreen = () => {
   const [location, setLocation] = useState();
-  const [region1, setRegion1] = React.useState({
-    latitude: 37,
-    longitude: 127,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01
-})
-  const [region2, setRegion2] = React.useState({
+  const ref = useRef();
+  const [reg1, setReg1] = React.useState({
     latitude: 37,
     longitude: 127,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01
   })
-  const ref = useRef();
-  
+  const [reg2, setReg2] = React.useState({
+    latitude: 37,
+    longitude: 127,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01
+  })
+
+  const getData = (reg1) => {
+    setReg1(reg1);
+  }
+
+  const getData2 = (reg2) => {
+    setReg2(reg2);
+  }
+
 useEffect(() => {
+  //사용자 위치 정보 추적
+  /*const _watchId = Geolocation.watchPosition(
+    position => {
+      const {latitude, longitude} = position.coords;
+      setLocation({latitude, longitude});
+    },
+    error => {
+      console.log(error);
+    },
+    {
+      enableHighAccuracy: true,
+      distanceFilter: 0,
+      interval: 5000,
+      fastestInterval: 2000,
+    },
+  );*/
+
   requestPermission().then(result => {
     console.log({ result });
     if (result === "granted") {
       Geolocation.getCurrentPosition(
         pos => {
           setLocation(pos.coords);
-          setRegion1(pos.coords);
-          setRegion2(pos.coords);
+          setReg1(pos.coords);
+          setReg2(pos.coords);
           console.log(pos.coords.latitude);
           console.log(pos.coords.longitude);
         },
@@ -212,20 +235,20 @@ useEffect(() => {
             longitudeDelta: 0.011,
           }} 
           region={{
-            latitude: (region1.latitude + region2.latitude) / 2,
-            longitude: (region1.longitude + region2.longitude) / 2,
+            latitude: (reg1.latitude + reg2.latitude) / 2,
+            longitude: (reg1.longitude + reg2.longitude) / 2,
             latitudeDelta: 0.011,
             longitudeDelta:0.011
           }}
           >
           <Marker
-            coordinate={{latitude: region1.latitude, longitude: region1.longitude}} 
+            coordinate={{latitude: reg1.latitude, longitude: reg1.longitude}}
             //title={"출발지 위치"}
             >
               <Image source={require('../../assets/imgs/placeholder.png')} style={{ width: 40, height: 40 }}></Image>
           </Marker>
           <Marker
-            coordinate={{latitude: region2.latitude, longitude: region2.longitude}}
+            coordinate={{latitude: reg2.latitude, longitude: reg2.longitude}}
             //title={"도착지 위치"}
              >
               <Image source={require('../../assets/imgs/placeholder_safe.png')} style={{ width: 40, height: 40 }}></Image>
@@ -245,7 +268,7 @@ useEffect(() => {
                 <Image source={require('../../assets/imgs/placeholder_danger.png')} style={{ width: 40, height: 40 }}></Image>
           </Marker>
           <Circle
-            center={{latitude: (region1.latitude + region2.latitude) / 2, longitude: (region1.longitude + region2.longitude) / 2}}
+            center={{latitude: (reg1.latitude + reg2.latitude) / 2, longitude: (reg1.longitude + reg2.longitude) / 2}}
             radius={500}
             fillColor='rgba(0,94,255,0.09)'
             strokeColor='rgba(0,94,255,0)'
@@ -280,7 +303,6 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: '5%',
-    //backgroundColor: 'blue',
     alignSelf: 'flex-start',
     alignItems: 'center',
     justifyContent: 'center',
@@ -290,7 +312,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   content1: {
-    //backgroundColor: 'green',
     width: '100%',
     height: '20%',
   },
@@ -305,7 +326,6 @@ const styles = StyleSheet.create({
     marginTop: 4
   },
   footer: {
-    //backgroundColor: 'blue',
     width: '100%',
     height: '15%',
     alignItems: 'center',
