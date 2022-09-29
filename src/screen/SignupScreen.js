@@ -18,6 +18,8 @@ import RadioForm, {
   RadioButtonLabel,
 } from 'react-native-simple-radio-button';
 import {ScrollView} from 'react-native';
+import axios from 'axios';
+
 
 var gender = [
   {value: 'man', label: '남'},
@@ -114,6 +116,41 @@ const App = () => {
   };
 
   const [checked, setChecked] = React.useState('남');
+
+  const signupFunction = () => {
+    if (password === checkpw) {
+      axios(
+        {
+            url: 'http://10.0.2.2:8080/api/v1/users/signup',
+            method: 'post',
+            data: {
+              userId: id,
+              password: password,
+              name: name,
+              birth: '2022-01-01',
+              address: address,
+              phoneNumber: phone,
+              useSirenCode: 1111,
+              gender: checked
+    
+            },
+            headers: {
+                contentType: 'application/json'
+            }
+        }
+      ).then(function (response) {
+        console.log(response.data);
+        alert('회원가입이 완료되었습니다.');
+      }).catch(function (error) {
+        console.log(error);
+        //alert("fail");
+      });
+    } else {
+      return alert('비밀번호가 일치하지 않습니다');
+    }
+
+  }
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -187,7 +224,7 @@ const App = () => {
         <RadioForm
           radio_props={gender}
           initial={0}
-          onPress={value => {}}
+          //onPress={value => {setChecked()}}
           buttonSize={15}
           buttonOuterSize={15}
           selectedButtonColor={'black'}
@@ -242,15 +279,7 @@ const App = () => {
 
       <TouchableOpacity
         style={styles.submitButton}
-        onPress={
-          (() => login(email, password),
-          () => {
-            if (password === checkpw) {
-            } else {
-              return alert('비밀번호가 일치하지 않습니다');
-            }
-          })
-        }>
+        onPress={signupFunction}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
     </ScrollView>
