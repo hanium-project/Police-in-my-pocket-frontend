@@ -28,16 +28,15 @@ const LoginApp = ({navigation}) => {
       }}>
       <TextInput
         style={{
-          width: 380,
-          height: 50,
+          width: '80%',
+          height: '7%',
           padding: 10,
-          marginTop: 350,
+          marginTop: '90%',
           backgroundColor: '#FFFFFF',
           borderRadius: 27,
           fontSize: 18,
           fontFamily: 'GmarketSansTTFMedium',
-          fontStyle: 'normal',
-        }}
+          fontStyle: 'normal'}}
         onChangeText={onChangeText}
         value={text}
         placeholder="ID"
@@ -49,14 +48,11 @@ const LoginApp = ({navigation}) => {
         placeholder="Password"
         secureTextEntry={true}
       />
-      <TouchableHighlight>
-        <View style={styles.button}>
+      <TouchableHighlight style={styles.button}>
           <Text style={styles.text} onPress={() => navigation.navigate('Menu')}>
             로그인
           </Text>
-        </View>
       </TouchableHighlight>
-      <Text>&nbsp;</Text>
       <View
         style={{
           flexDirection: 'row',
@@ -89,8 +85,8 @@ const LoginApp = ({navigation}) => {
 
 const styles = StyleSheet.create({
   input: {
-    width: 380,
-    height: 45,
+    width: '80%',
+    height: '7%',
     padding: 10,
     margin: 10,
     backgroundColor: '#FFFFFF',
@@ -101,12 +97,13 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: 380,
-    height: 45,
+    width: '80%',
+    height: '7%',
     paddingTop: 12,
+    marginBottom: 5,
     backgroundColor: '#5982da',
     borderRadius: 27,
-    fontSize: 18,
+    //fontSize: 18,
     fontFamily: 'GmarketSansTTFMedium',
     fontStyle: 'normal',
     alignItems: 'center',

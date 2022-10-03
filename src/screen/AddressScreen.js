@@ -22,7 +22,7 @@ const AddressApp = () => {
         <Text style = {styles.title}>
           {"\r"}주요 연락처 등록{"\r"}
           <TouchableHighlight onPress={() =>Linking.openURL('https://www.google.co.kr/')}>
-            <Image style ={{ width: 30, height: 30, alignSelf: 'flex-end'}} source = {require('../../assets/imgs/user.png')}/>
+            <Image style ={{width: 30, height: 30, alignSelf: 'flex-end'}} source = {require('../../assets/imgs/user.png')}/>
           </TouchableHighlight>
           {"\n\n\n"}
           </Text>

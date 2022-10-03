@@ -13,13 +13,14 @@ import EditInfo from "./src/screen/EditinfoScreen";
 import EditPw from "./src/screen/EditPwScreen";
 import Location from "./src/screen/LocationInformScreen";
 import ReportModal from "./src/component/ReportModal";
+import Address from "./src/screen/AddressScreen";
 
 export default function App() {
   const Stack = createStackNavigator();
   
   return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Menu">
         <Stack.Screen name="Login" component={Login} options={{headerShown: false,}}/>
         <Stack.Screen name="Main" component={Main} options={{headerShown: false,}}/>
         <Stack.Screen name="Signup" component={Signup} options={{headerShown: false,}}/>
@@ -30,6 +31,7 @@ export default function App() {
         <Stack.Screen name="MyPage" component={MyPage} options={{headerShown: false,}}/>
         <Stack.Screen name="EditInfo" component={EditInfo} options={{headerShown: false,}}/>
         <Stack.Screen name="EditPw" component={EditPw} options={{headerShown: false,}}/>
+        <Stack.Screen name="Address" component={Address} options={{headerShown: false,}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
