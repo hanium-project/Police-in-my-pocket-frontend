@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ReportModal from '../component/ReportModal';
 import Sound from 'react-native-sound';
-import Toggle from '../component/Toggle';
-import ToggleSwitch from 'toggle-switch-react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ViewContainerMap = styled.View`
   flex: 1.1;
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    padding: '3%',
-    margin: '2%',
+    padding: 9,
+    margin: 8,
     flexDirection: 'row',
     borderRadius: 10,
     width: '95%',
@@ -82,6 +82,7 @@ const MapExample = ({navigation}) => {
        return;
      }
       setModalOpen(true)
+      sendMessage()
      controlLocal.play(() => {
        controlLocal.release();
      });
@@ -96,6 +97,26 @@ const MapExample = ({navigation}) => {
   }
 
   const [location, setLocation] = useState();
+
+  const sendMessage = async () => {
+    const token = await AsyncStorage.getItem('accessToken');
+    console.log('token', token);
+    axios(
+      {
+          url: 'http://10.0.2.2:8080/api/v1/emergency/jjj1111/01024907323',
+          method: 'post',
+          headers: {
+              contentType: 'application/json',
+              Authorization: `Bearer ${token}`
+          }
+      }
+    ).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+  
   useEffect(() => {
     requestPermission().then(result => {
       console.log({ result });
@@ -119,40 +140,37 @@ const MapExample = ({navigation}) => {
 
   return (
     <>
-      <View style={{flexDirection: 'row', backgroundColor: '#709eff'}}>
-        <View style={{flexDirection: 'row'}}>
-          <Toggle/>
-          <View>
+      <View style={{flexDirection: 'row', backgroundColor: '#709eff',}}>
+        <View>
           <Text style={{
               fontFamily:'GmarketSansTTFMedium',
               color: 'white',
-              marginTop: '4%',
+              marginTop: 10,
               fontSize: 13,
-              marginLeft: '37%'
+              marginLeft: 200
             }}>OOO님, 환영합니다.</Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={{
                 fontFamily:'GmarketSansTTFMedium',
                 color: 'white',
-                marginTop: '1%',
+                marginTop: 5,
                 fontSize: 10,
-                marginLeft: '37%'
+                marginLeft: 200
             }}>로그아웃 </Text>
             <Text style={{
                 fontFamily:'GmarketSansTTFMedium',
                 color: 'white',
-                marginTop: '1%',
+                marginTop: 5,
                 fontSize: 10,
             }} onPress={() => navigation.navigate('MyPage')}>마이페이지</Text>
-          </View>
           </View>
         </View>
         <Image source={require('../../assets/imgs/user2.png')}
           style={{
-            width: '5%',
-            height: '55%',
-            marginTop: '4%',
-            marginLeft: -40
+            width: 30,
+            height: 30,
+            marginTop: 10,
+            marginLeft: -2
           }}></Image>
       </View>
       <ViewContainerMap>
@@ -166,20 +184,20 @@ const MapExample = ({navigation}) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Image source={require('../../assets/imgs/placeholder.png')}
             style={{
-              width: '5%',
+              width: 12,
               height: 12,
               marginLeft: '5%',
           }}></Image>
           <MarkerCustomFont>현재 위치</MarkerCustomFont>
           <Image source={require('../../assets/imgs/placeholder_danger.png')}
               style={{
-                width: '5%',
+                width: 12,
                 height: 12,
           }}></Image>
           <MarkerCustomFont>위험 지역</MarkerCustomFont>
           <Image source={require('../../assets/imgs/placeholder_safe.png')}
               style={{
-                width: '5%',
+                width: 12,
                 height: 12,
               }}></Image>
           <MarkerCustomFont>치안 시설</MarkerCustomFont>
@@ -216,7 +234,7 @@ const MapExample = ({navigation}) => {
                 title="current location"
                 description="this is a current location marker"
               >
-                <Image source={require('../../assets/imgs/placeholder.png')} style={{ width: 40, height: 40 }}></Image>
+              <Image source={require('../../assets/imgs/placeholder.png')} style={{ width: 40, height: 40 }}></Image>
               </Marker>
               <Marker
                 coordinate={{latitude: 37.79000, longitude: -122.4324}}
@@ -244,8 +262,8 @@ const MapExample = ({navigation}) => {
           <Image
             source={require('../../assets/imgs/siren.png')}
             style={{
-              width: '10%',
-              height: '200%',
+              width: 30,
+              height: 30,
               marginLeft: 5,
             }}></Image>
         <ButtonCustomFont style={{fontSize: 12.6}}>긴급상황 발생! 인근 파출소 혹은 가족에게 신고하기</ButtonCustomFont>
@@ -255,8 +273,8 @@ const MapExample = ({navigation}) => {
           <Image
             source={require('../../assets/imgs/police-car.png')}
             style={{
-              width: '10%',
-              height: '200%',
+              width: 30,
+              height: 30,
               marginLeft: 5,
             }}></Image>
           <ButtonCustomFont>안심 귀가 서비스 이용하기</ButtonCustomFont>
@@ -266,8 +284,8 @@ const MapExample = ({navigation}) => {
           <Image
             source={require('../../assets/imgs/open-book.png')}
             style={{
-              width: '10%',
-              height: '200%',
+              width: 30,
+              height: 30,
               marginLeft: 5,
             }}></Image>
           <ButtonCustomFont>주요 연락처 및 목적지 등록하기</ButtonCustomFont>
@@ -277,8 +295,8 @@ const MapExample = ({navigation}) => {
           <Image
             source={require('../../assets/imgs/sign.png')}
             style={{
-              width: '10%',
-              height: '200%',
+              width: 30,
+              height: 30,
               marginLeft: 5,
             }}></Image>
           <ButtonCustomFont>실시간 위험 지역 / 치안 시설 정보 확인하기</ButtonCustomFont>

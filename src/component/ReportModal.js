@@ -90,8 +90,9 @@ const styles = StyleSheet.create({
     borderRadius:27,
     width: 75,
     height: 40,
-    marginTop: '5%',
-    marginLeft: '55%'
+    marginTop: 10,
+    marginRight: 10,
+    marginLeft: 85
   },
   modalText: {
     fontSize: 15,

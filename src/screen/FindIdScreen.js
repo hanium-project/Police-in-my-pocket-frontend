@@ -23,20 +23,20 @@ const FindId  = ({navigation}) => {
     fontFamily: 'GmarketSansTTFMedium',
     color: '#FFFFFF',
     fontSize: 18,
-    marginTop: '5%',
+    marginTop: 20,
       }}>
     {titleText}
 </Text>
 <View style={styles.header}>
 <TextInput
         style={{
-          width: '56%',
-          height: '57%',
-          padding: '2.5%',
-          marginTop: '5%',
+          width: 250,
+          height: 50,
+          padding: 10,
+          marginTop: 25,
           backgroundColor: '#FFFFFF',
           borderRadius: 27,
-          fontSize: 16,
+          fontSize: 18,
           fontFamily: 'GmarketSansTTFMedium',
           fontStyle: 'normal',
           flexDirection: 'row'
@@ -71,27 +71,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
-    width: "120%",
-    height: 40,
+    width: 100,
+    height: 50,
     backgroundColor: '#FFFFFF',
     borderRadius: 27,
     fontSize: 18,
-    marginTop: 20,
-    marginRight: '1%',
+    marginTop: 25,
     fontFamily: 'GmarketSansTTFMedium',
     fontStyle: 'normal',
     alignItems: 'center',
     paddingTop: 16
   },
   input: {
-    width: '75%',
-    height: '6%',
-    padding: '2.5%',
-    margin: '2%',
+    width: 350,
+    height: 45,
+    padding: 10,
+    margin: 10,
     backgroundColor: '#FFFFFF',
     borderRadius: 27,
-    fontSize: 16,
-    marginLeft:'7%',
+    fontSize: 18,
     fontFamily: 'GmarketSansTTFMedium',
     fontStyle: 'normal',
   },
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: 'GmarketSansTTFMedium',
     color: '#709eff',
     fontStyle: 'normal',

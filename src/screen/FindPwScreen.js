@@ -30,16 +30,17 @@ const FindPw  = ({navigation}) => {
 <View style={styles.header}>
 <TextInput
         style={{
-          width: '58%',
-          height: '65%',
-          padding: '2.5%',
-          marginTop: '5%',
+          width: 250,
+          height: 50,
+          padding: 10,
+          // marginTop: 25,
           backgroundColor: '#FFFFFF',
           borderRadius: 27,
           fontSize: 18,
           fontFamily: 'GmarketSansTTFMedium',
           fontStyle: 'normal',
           flexDirection: 'row',
+          marginTop: 20,
         }}
        onChangeText={onChangeNumber}
         value={text}
@@ -64,18 +65,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
-    width: "130%",
+    width: 100,
     height: 50,
     backgroundColor: '#FFFFFF',
     borderRadius: 27,
     fontSize: 18,
-    marginTop: 25,
+    // marginTop: 25,
     fontFamily: 'GmarketSansTTFMedium',
     fontStyle: 'normal',
     alignItems: 'center',
     paddingTop: 10,
     paddingLeft: 10,
+    marginTop: 20
   },
+  input: {
+    width: 350,
+    height: 45,
+    padding: 10,
+    margin: 10,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 27,
+    fontSize: 18,
+    fontFamily: 'GmarketSansTTFMedium',
+    fontStyle: 'normal',
+  },
+
   container: {
     flex: 1,
     // justifyContent: 'center',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   TextInput,
   StyleSheet,
@@ -7,14 +7,46 @@ import {
   Text,
 } from 'react-native';
 import {Dimensions, Image, ImageBackground} from 'react-native';
-
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var {width} = Dimensions.get('window');
 
 const LoginApp = ({navigation}) => {
   //초기값, 변경값 설정
-  const [text, onChangeText] = React.useState(null);
-  const [number, onChangeNumber] = React.useState(null);
+  const [id, setId] = useState(null);
+  const [password, setPassword] = useState(null);
+
+
+  const loginFunction = () => {
+    console.log({
+      id,
+      password
+    });
+
+    axios(
+      {
+          url: 'http://10.0.2.2:8080/api/v1/users/signin',
+          method: 'post',
+          data: {
+             userId: id,
+             password: password
+          },
+          headers: {
+              contentType: 'application/json'
+          }
+      }
+  ).then(function (response) {
+      console.log(response.data.accessToken);
+      AsyncStorage.setItem('accessToken', response.data.accessToken);
+      AsyncStorage.setItem('refreshToken', response.data.refreshToken);
+      navigation.navigate('Menu');
+      alert('ooo님 환영합니다!');
+  }).catch(function (error) {
+      console.log(error);
+      alert("fail");
+  });
+  }
 
   return (
     <ImageBackground
@@ -28,31 +60,35 @@ const LoginApp = ({navigation}) => {
       }}>
       <TextInput
         style={{
-          width: '80%',
-          height: '7%',
+          width: 380,
+          height: 50,
           padding: 10,
-          marginTop: '90%',
+          marginTop: 350,
           backgroundColor: '#FFFFFF',
           borderRadius: 27,
           fontSize: 18,
           fontFamily: 'GmarketSansTTFMedium',
-          fontStyle: 'normal'}}
-        onChangeText={onChangeText}
-        value={text}
+          fontStyle: 'normal',
+        }}
+        onChangeText={(id) => setId(id)}
+        value={id}
         placeholder="ID"
       />
       <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
+        onChangeText={(password) => setPassword(password)}
+        value={password}
         placeholder="Password"
         secureTextEntry={true}
       />
-      <TouchableHighlight style={styles.button}>
-          <Text style={styles.text} onPress={() => navigation.navigate('Menu')}>
+      <TouchableHighlight>
+        <View style={styles.button}>
+          <Text style={styles.text} onPress={loginFunction}>
             로그인
           </Text>
+        </View>
       </TouchableHighlight>
+      <Text>&nbsp;</Text>
       <View
         style={{
           flexDirection: 'row',
@@ -85,8 +121,8 @@ const LoginApp = ({navigation}) => {
 
 const styles = StyleSheet.create({
   input: {
-    width: '80%',
-    height: '7%',
+    width: 380,
+    height: 45,
     padding: 10,
     margin: 10,
     backgroundColor: '#FFFFFF',
@@ -97,13 +133,12 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: '80%',
-    height: '7%',
+    width: 380,
+    height: 45,
     paddingTop: 12,
-    marginBottom: 5,
     backgroundColor: '#5982da',
     borderRadius: 27,
-    //fontSize: 18,
+    fontSize: 18,
     fontFamily: 'GmarketSansTTFMedium',
     fontStyle: 'normal',
     alignItems: 'center',
