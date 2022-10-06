@@ -7,6 +7,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import ReportModal from '../component/ReportModal';
 import Sound from 'react-native-sound';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ViewContainerMap = styled.View`
   flex: 1.1;
@@ -97,22 +98,22 @@ const MapExample = ({navigation}) => {
 
   const [location, setLocation] = useState();
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
+    const token = await AsyncStorage.getItem('accessToken');
+    console.log('token', response.data.accessToken);
     axios(
       {
           url: 'http://10.0.2.2:8080/api/v1/emergency/jjj1111/01024907323',
           method: 'post',
           headers: {
               contentType: 'application/json',
-              Autho
+              Authorization: `Bearer ${token}`
           }
       }
     ).then(function (response) {
       console.log(response.data);
-      alert('회원가입이 완료되었습니다.');
     }).catch(function (error) {
       console.log(error);
-      //alert("fail");
     });
   }
   
@@ -233,7 +234,7 @@ const MapExample = ({navigation}) => {
                 title="current location"
                 description="this is a current location marker"
               >
-                <Image source={require('../../assets/imgs/placeholder.png')} style={{ width: 40, height: 40 }}></Image>
+              <Image source={require('../../assets/imgs/placeholder.png')} style={{ width: 40, height: 40 }}></Image>
               </Marker>
               <Marker
                 coordinate={{latitude: 37.79000, longitude: -122.4324}}

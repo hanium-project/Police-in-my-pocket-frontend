@@ -117,7 +117,7 @@ const App = () => {
 
   const [checked, setChecked] = React.useState('남');
 
-  const signupFunction = () => {
+  const signupFunction = ({navigation}) => {
     if (password === checkpw) {
       axios(
         {
@@ -141,6 +141,8 @@ const App = () => {
       ).then(function (response) {
         console.log(response.data);
         alert('회원가입이 완료되었습니다.');
+        navigation.navigate('Login');
+
       }).catch(function (error) {
         console.log(error);
         //alert("fail");

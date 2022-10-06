@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {Dimensions, Image, ImageBackground} from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var {width} = Dimensions.get('window');
 
@@ -37,8 +38,11 @@ const LoginApp = ({navigation}) => {
       }
   ).then(function (response) {
       console.log(response.data.accessToken);
+      //AsyncStorage는 String 형태만 저장할 수 있음
+      AsyncStorage.setItem('accessToken', response.data.accessToken);
+      AsyncStorage.setItem('accessToken', response.data.refreshToken);
       navigation.navigate('Menu');
-      //alert(response.data.accessToken);
+      alert('ooo님 환영합니다!');
   }).catch(function (error) {
       console.log(error);
       alert("fail");

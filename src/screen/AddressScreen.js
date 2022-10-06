@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import { 
   TextInput, 
   StyleSheet,  
@@ -15,6 +16,10 @@ import Button_address from '../component/Button_address';
 var {width} = Dimensions.get('window');
 
 const AddressApp = () => {
+  const [name, setName] = useState();
+  const [tel, setTel] = useState();
+  const [relationship, setRelationship] = useState();
+
 
   return (     
     <View style = {styles.container}>
@@ -30,29 +35,34 @@ const AddressApp = () => {
 
       <View style = {styles.content}>
         <Text style = {styles.text}>{"\n"}이름{"\n"}</Text>
-          <TextInput style={styles.input} placeholder="이름을 입력하세요." autoFocus/>
+          <TextInput style={styles.input} 
+          value={name}
+          onChangeText={name => setName(name)}
+          placeholder="이름을 입력하세요." autoFocus/>
             <Pressable
                 style={({pressed}) => [styles.button, pressed && {opacity: 0.5}]}>
             </Pressable>
           <Text>{"\n\n"}</Text>
 
           <Text style = {styles.text}>연락처 ( - 제외 ){"\n"}</Text>
-          <TextInput style={styles.input} placeholder="연락처를 입력하세요." autoFocus/>
+          <TextInput style={styles.input} placeholder="연락처를 입력하세요." 
+          value={tel}
+          onChangeText={tel => setTel(tel)}
+          autoFocus/>
             <Pressable
                 style={({pressed}) => [styles.button, pressed && {opacity: 0.5}]}>
             </Pressable>
           <Text>{"\n\n"}</Text>
 
           <Text style = {styles.text}>관계{"\n"}</Text>
-          <TextInput style={styles.input} placeholder="관계를 입력하세요." autoFocus/>
-            <Pressable
-                style={({pressed}) => [styles.button, pressed && {opacity: 0.5}]}>
-            </Pressable>
-          <Text>{"\n\n"}</Text>
+          <TextInput style={styles.input} placeholder="관계를 입력하세요." 
+          value={relationship}
+          onChangeText={relationship => setRelationship(relationship)}
+          autoFocus/>
       </View>
 
       <View style={styles.footer}>
-        <Button_address/>
+        <Button_address n={name} c={tel} r={relationship}/>
       </View>
   </View> 
 )}
@@ -90,7 +100,7 @@ const styles = StyleSheet.create({
   },
   title: {
     alignSelf: 'flex-start',
-    fontSize: 30,
+    fontSize: 22,
     color: '#ffffff',
     marginBottom: 15,
     fontFamily: 'GmarketSansTTFMedium',

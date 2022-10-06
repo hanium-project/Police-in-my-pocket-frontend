@@ -6,6 +6,7 @@ import { PermissionsAndroid } from 'react-native';
 import MyButton from '../component/MyButton';
 import ModalView from '../component/ModalView';
 import SearchBar1 from '../component/SearchBar1';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import SearchBar2 from '../component/SearchBar2';
 
 async function requestPermission() {
@@ -156,7 +157,7 @@ useEffect(() => {
                     rankby: 'distance',
                     radius: 420,
                     location: `${location.latitude}, ${location.longitude}`
-                    //location: `37.78825, -122.4324``
+                    //location: `37.78825, -122.4324`
                 }}
                 renderDescription={row => row.description}
                 styles={{
@@ -231,8 +232,8 @@ useEffect(() => {
           initialRegion={{
             latitude: location.latitude,
             longitude: location.longitude,
-            latitudeDelta: 0.011,
-            longitudeDelta: 0.011,
+            // latitudeDelta: 0.011,
+            // longitudeDelta: 0.011,
           }} 
           region={{
             latitude: (reg1.latitude + reg2.latitude) / 2,
