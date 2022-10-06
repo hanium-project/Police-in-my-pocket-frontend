@@ -7,6 +7,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import ReportModal from '../component/ReportModal';
 import Sound from 'react-native-sound';
 import axios from 'axios';
+import { PermissionsAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ViewContainerMap = styled.View`
@@ -68,6 +69,8 @@ async function requestPermission() {
 
 const MapExample = ({navigation}) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [location, setLocation] = useState();
+  const [token, setToken] = useState();
   let controlLocal;
   let localSound = require('../../assets/sounds/siren.mp3');
 
@@ -82,7 +85,7 @@ const MapExample = ({navigation}) => {
        return;
      }
       setModalOpen(true)
-      sendMessage()
+      sendPostAll()
      controlLocal.play(() => {
        controlLocal.release();
      });
@@ -96,14 +99,32 @@ const MapExample = ({navigation}) => {
       });
   }
 
-  const [location, setLocation] = useState();
-
-  const sendMessage = async () => {
-    const token = await AsyncStorage.getItem('accessToken');
-    console.log('token', response.data.accessToken);
+  const sendPostAll = async() => {
+    const tmpToken = await AsyncStorage.getItem('accessToken');
+    setToken(tmpToken);
     axios(
       {
-          url: 'http://10.0.2.2:8080/api/v1/emergency/jjj1111/01024907323',
+          url: 'http://10.0.2.2:8080/api/v1/emergency',
+          method: 'post',
+          data: {
+            latitude: location.latitude,
+            longitude: location.longitude,
+            locationTitle: '위험한 장소'
+          },
+          headers: {
+              contentType: 'application/json',
+              Authorization: `Bearer ${token}`
+          }
+      }
+    ).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+
+    axios(
+      {
+          url: 'http://10.0.2.2:8080/api/v1/emergency/01024907323',
           method: 'post',
           headers: {
               contentType: 'application/json',
@@ -116,8 +137,13 @@ const MapExample = ({navigation}) => {
       console.log(error);
     });
   }
+
   
   useEffect(() => {
+    //const token = await AsyncStorage.getItem('accessToken');
+    axios(
+
+    )
     requestPermission().then(result => {
       console.log({ result });
       if (result === "granted") {
@@ -230,21 +256,21 @@ const MapExample = ({navigation}) => {
               }}    
             >
               <Marker
-                coordinate={{latitude: 37.78825, longitude: -122.4324}}
+                coordinate={{latitude: location.latitude, longitude: location.longitude}}
                 title="current location"
                 description="this is a current location marker"
               >
               <Image source={require('../../assets/imgs/placeholder.png')} style={{ width: 40, height: 40 }}></Image>
               </Marker>
               <Marker
-                coordinate={{latitude: 37.79000, longitude: -122.4324}}
+                coordinate={{latitude: location.latitude+0.00175, longitude: location.longitude}}
                 title="danger location"
                 description="this is a danger location marker"
               >
                 <Image source={require('../../assets/imgs/placeholder_danger.png')} style={{ width: 40, height: 40 }}></Image>
               </Marker>
               <Marker
-                coordinate={{latitude: 37.78888, longitude: -122.4350}}
+                coordinate={{latitude: location.latitude+0.00063, longitude: location.longitude-0.0026}}
                 title="safe location"
                 description="this is a safe location marker"
               >

@@ -18,8 +18,7 @@ import RadioForm, {
   RadioButtonLabel,
 } from 'react-native-simple-radio-button';
 import {ScrollView} from 'react-native';
-import axios from 'axios';
-
+import axios from 'axios'
 
 var gender = [
   {value: 'man', label: '남'},
@@ -90,13 +89,10 @@ const App = () => {
   const [password, setPassword] = useState('');
   const [checkpw, setCheckpw] = useState('');
   const [name, setName] = useState('');
-  const [birth, setBirth] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
-  const [emergency1, setEmergency1] = useState('');
-  const [emergency2, setEmergency2] = useState('');
-  const [emergency3, setEmergency3] = useState('');
+  const [code, setCode] = useState();
   const [text, onChangeText] = useState('');
 
   const showDatePicker = () => {
@@ -130,9 +126,9 @@ const App = () => {
               birth: '2022-01-01',
               address: address,
               phoneNumber: phone,
-              useSirenCode: 1111,
+              useSirenCode: parseInt(code),
               gender: checked
-    
+
             },
             headers: {
                 contentType: 'application/json'
@@ -150,7 +146,6 @@ const App = () => {
     } else {
       return alert('비밀번호가 일치하지 않습니다');
     }
-
   }
 
   return (
@@ -224,16 +219,19 @@ const App = () => {
       </View>
       <View>
         <RadioForm
+          style={{
+            marginLeft: '3%'
+          }}
           radio_props={gender}
           initial={0}
-          //onPress={value => {setChecked()}}
+          onPress={value => {}}
           buttonSize={15}
           buttonOuterSize={15}
           selectedButtonColor={'black'}
           labelStyle={{
             fontSize: 15,
             fontFamily: 'GmarketSansTTFMedium',
-            marginLeft: 30,
+            marginLeft: '10%',
           }}
           disable={true}
           formHorizontal={true}
@@ -257,26 +255,12 @@ const App = () => {
 
       <TextInput
         style={styles.textInput}
-        placeholder="비상연락처1"
+        placeholder="보안코드"
         placeholderTextColor="white"
-        onChangeText={text => setEmergency1(text)}
-        value={emergency1}
-      />
-
-      <TextInput
-        style={styles.textInput}
-        placeholder="비상연락처2"
-        placeholderTextColor="white"
-        onChangeText={text => setEmergency2(text)}
-        value={emergency2}
-      />
-
-      <TextInput
-        style={styles.textInput}
-        placeholder="비상연락처3"
-        placeholderTextColor="white"
-        onChangeText={text => setEmergency3(text)}
-        value={emergency3}
+        //keyboardType="numeric"
+        onChangeText={text => setCode(text)}
+        //var code1 ={Number.parseInt(code1, 8)}
+        value = {code}
       />
 
       <TouchableOpacity
@@ -284,6 +268,7 @@ const App = () => {
         onPress={signupFunction}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
+
     </ScrollView>
   );
 };
@@ -306,7 +291,7 @@ const styles = StyleSheet.create({
     fontFamily: 'GmarketSansTTFMedium',
   },
   textInput: {
-    margin: 10,
+    margin: '2%',
     borderRadius: 20,
     backgroundColor: '#bdd2ff',
     fontFamily: 'GmarketSansTTFMedium',
@@ -317,16 +302,16 @@ const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: '#043BFF',
     borderRadius: 20,
-    padding: 10,
-    margin: 15,
+    padding: '3%',
+    margin: '5%',
     alignItems: 'center',
     fontFamily: 'GmarketSansTTFMedium',
   },
   radio: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
-    marginRight: 10,
+    marginBottom: '5%',
+    marginRight: '5%',
   },
   submitButtonText: {
     color: 'white',

@@ -42,7 +42,7 @@ const LoginApp = ({navigation}) => {
       AsyncStorage.setItem('accessToken', response.data.accessToken);
       AsyncStorage.setItem('accessToken', response.data.refreshToken);
       navigation.navigate('Menu');
-      alert('ooo님 환영합니다!');
+      alert(response.data.userId + '님 환영합니다!');
   }).catch(function (error) {
       console.log(error);
       alert("fail");

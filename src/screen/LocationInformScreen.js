@@ -3,7 +3,9 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE, } from 'react-native-maps';
 import styled from 'styled-components';
+import { PermissionsAndroid } from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import axios from 'axios';
 
 const ViewContainerMap = styled.View`
   flex: 1;
@@ -40,20 +42,6 @@ const CountCustomFont = styled.Text`
   color: black;
 `
 
-const safeRegion = {
-  latitude: 37.78888, 
-  longitude: -122.4350,
-  latitudeDelta: 0.005,
-  longitudeDelta: 0.005,
-}
-
-const dangerRegion = {
-  latitude: 37.79000, 
-  longitude: -122.4324,
-  latitudeDelta: 0.005,
-  longitudeDelta: 0.005,
-}
-
 async function requestPermission() {
   try {
     if (Platform.OS === "ios") {
@@ -74,6 +62,20 @@ const MapExample = ({navigation}) => {
   const [location, setLocation] = useState();
   const changeLocation = useRef(null);
 
+  const safeRegion = {
+    latitude: location.latitude, 
+    longitude: location.longitude + 0.001,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
+  }
+  
+  const dangerRegion = {
+    latitude: location.latitude + 0.001, 
+    longitude: location.longitude,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
+  }
+
   useEffect(() => {
     requestPermission().then(result => {
       console.log({ result });
@@ -93,6 +95,10 @@ const MapExample = ({navigation}) => {
         );
       }
     });
+
+    axios(
+
+    )
   }, []);
 
   const goToSafeArea = () => {
@@ -166,30 +172,30 @@ const MapExample = ({navigation}) => {
               showsUserLocation={true}
               provider={PROVIDER_GOOGLE}
               initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                //latitude: location.latitude,
-                //longitude: location.longitude,
+                //latitude: 37.78825,
+                //longitude: -122.4324,
+                latitude: location.latitude,
+                longitude: location.longitude,
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005,
               }}    
             >
               <Marker
-                coordinate={{latitude: 37.78825, longitude: -122.4324}}
+                coordinate={{latitude: location.latitude, longitude: location.longitude}}
                 title="current location"
                 description="this is a current location marker"
               >
                 <Image source={require('../../assets/imgs/placeholder.png')} style={{ width: 40, height: 40 }}></Image>
               </Marker>
               <Marker
-                coordinate={{latitude: 37.79000, longitude: -122.4324}}
+                coordinate={{latitude: location.latitude + 0.001, longitude: location.location}}
                 title="danger location"
                 description="this is a danger location marker"
               >
                 <Image source={require('../../assets/imgs/placeholder_danger.png')} style={{ width: 40, height: 40 }}></Image>
               </Marker>
               <Marker
-                coordinate={{latitude: 37.78888, longitude: -122.4350}}
+                coordinate={{latitude: location.latitude, longitude: location.longitude + 0.001}}
                 title="safe location"
                 description="this is a safe location marker"
               >
