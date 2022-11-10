@@ -1,23 +1,16 @@
 import React, {useState} from 'react';
 import {
-  Platform,
   View,
   StyleSheet,
   TextInput,
-  SafeAreaView,
   TouchableOpacity,
   Text,
-  Component,
   Image,
+  ScrollView
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import RadioGroup from 'react-native-radio-button-group';
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from 'react-native-simple-radio-button';
-import {ScrollView} from 'react-native';
+import RadioForm from 'react-native-simple-radio-button';
+import axios from 'axios'
 
 var gender = [
   {value: 'man', label: '남'},
@@ -75,9 +68,11 @@ String.prototype.string = function (len) {
   }
   return s;
 };
+
 String.prototype.zf = function (len) {
   return '0'.string(len - this.length) + this;
 };
+
 Number.prototype.zf = function (len) {
   return this.toString().zf(len);
 };
@@ -88,13 +83,10 @@ const App = () => {
   const [password, setPassword] = useState('');
   const [checkpw, setCheckpw] = useState('');
   const [name, setName] = useState('');
-  const [birth, setBirth] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
-  const [emergency1, setEmergency1] = useState('');
-  const [emergency2, setEmergency2] = useState('');
-  const [emergency3, setEmergency3] = useState('');
+  const [code, setCode] = useState();
   const [text, onChangeText] = useState('');
 
   const showDatePicker = () => {
@@ -114,8 +106,45 @@ const App = () => {
   };
 
   const [checked, setChecked] = React.useState('남');
+
+  const signupFunction = ({navigation}) => {
+    if (password === checkpw) {
+      axios(
+        {
+            url: 'http://10.0.2.2:8080/api/v1/users/signup',
+            method: 'post',
+            data: {
+              userId: id,
+              password: password,
+              name: name,
+              birth: '2022-01-01',
+              address: address,
+              phoneNumber: phone,
+              useSirenCode: parseInt(code),
+              gender: checked
+
+            },
+            headers: {
+                contentType: 'application/json'
+            }
+        }
+      ).then(function (response) {
+        console.log(response.data);
+        alert('회원가입이 완료되었습니다.');
+        navigation.navigate('Login');
+
+      }).catch(function (error) {
+        console.log(error);
+        //alert("fail");
+      });
+    } else {
+      return alert('비밀번호가 일치하지 않습니다');
+    }
+  }
+
   return (
     <ScrollView style={styles.container}>
+
       <View style={styles.header}>
         <Text style={styles.titleText}>
           {'\n'}
@@ -131,6 +160,7 @@ const App = () => {
           }}
         />
       </View>
+
       <TextInput
         style={styles.textInput}
         placeholder="아이디"
@@ -140,6 +170,7 @@ const App = () => {
         onChangeText={text => setId(text)}
         value={id}
       />
+
       <TextInput
         style={styles.textInput}
         placeholder="비밀번호"
@@ -148,6 +179,7 @@ const App = () => {
         value={password}
         secureTextEntry={true}
       />
+
       <TextInput
         style={styles.textInput}
         placeholder="비밀번호 재확인"
@@ -156,6 +188,7 @@ const App = () => {
         value={checkpw}
         secureTextEntry={true}
       />
+
       <TextInput
         style={styles.textInput}
         placeholder="이름"
@@ -163,6 +196,7 @@ const App = () => {
         onChangeText={text => setName(text)}
         value={name}
       />
+
       <View>
         <TouchableOpacity onPress={showDatePicker}>
           <TextInput
@@ -183,6 +217,7 @@ const App = () => {
           />
         </TouchableOpacity>
       </View>
+
       <View>
         <RadioForm
           style={{
@@ -203,6 +238,7 @@ const App = () => {
           formHorizontal={true}
         />
       </View>
+
       <TextInput
         style={styles.textInput}
         placeholder="주소"
@@ -221,41 +257,18 @@ const App = () => {
 
       <TextInput
         style={styles.textInput}
-        placeholder="비상연락처1"
+        placeholder="보안코드"
         placeholderTextColor="white"
-        onChangeText={text => setEmergency1(text)}
-        value={emergency1}
-      />
-
-      <TextInput
-        style={styles.textInput}
-        placeholder="비상연락처2"
-        placeholderTextColor="white"
-        onChangeText={text => setEmergency2(text)}
-        value={emergency2}
-      />
-
-      <TextInput
-        style={styles.textInput}
-        placeholder="비상연락처3"
-        placeholderTextColor="white"
-        onChangeText={text => setEmergency3(text)}
-        value={emergency3}
+        onChangeText={text => setCode(text)}
+        value = {code}
       />
 
       <TouchableOpacity
         style={styles.submitButton}
-        onPress={
-          (() => login(email, password),
-          () => {
-            if (password === checkpw) {
-            } else {
-              return alert('비밀번호가 일치하지 않습니다');
-            }
-          })
-        }>
+        onPress={signupFunction}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
+
     </ScrollView>
   );
 };
@@ -304,5 +317,4 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-
 export default App;

@@ -1,18 +1,6 @@
 import React, {useState} from 'react';
-import {
-  Platform,
-  View,
-  StyleSheet,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-  Text,
-  Component,
-  Image,
-} from 'react-native';
+import {StyleSheet,} from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createAppContainer } from "react-navigation";
-import { NavigationContainer } from '@react-navigation/native';
 import FindId from "./FindIdScreen";
 import FindPw from "./FindPwScreen";
 
@@ -54,6 +42,5 @@ const Find  = ({navigation}) => {
     fontFamily: 'GmarketSansTTFMedium',
     color: '#FFFFFF',
   }
-}
-  );
-  export default Find;
+});
+export default Find;

@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {StyleSheet, Text, View, Image, Keyboard, TouchableOpacity } from 'react-native';
-import MapView, {Circle, Marker, Directions, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
+import {StyleSheet, Text, View, Image, Keyboard } from 'react-native';
+import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
 import MyButton from '../component/MyButton';
@@ -39,15 +39,9 @@ const MainScreen = () => {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01
   })
-  const [reg3, setReg3] = React.useState({
-    address: '서울특별시 성북구 하월곡동 222'
-  })
-  const [reg4, setReg4] = React.useState({
-    address: '서울특별시 성북구 하월곡동 222'
-  })
-  const [curr, setCurr] = React.useState({
-    address: ''
-  })
+  const [reg3, setReg3] = useState(1);
+  const [reg4, setReg4] = useState(1);
+  const [reg5, setReg5] = useState(1);
 
   const getData = (reg1) => {
     setReg1(reg1);
@@ -57,12 +51,12 @@ const MainScreen = () => {
     setReg2(reg2);
   }
 
-  const getAddress = (reg3) => {
+  const getAddress1 = (reg3) => {
     setReg3(reg3);
   }
 
-  const getAddress2 = (reg4) => {
-    setReg4(reg4);
+  const getAddress2 = (reg5) => {
+    setReg5(reg5);
   }
 
 useEffect(() => {
@@ -99,6 +93,13 @@ if (!location) {
   );
 }
 
+fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.latitude + ',' + location.longitude
++ '&key=AIzaSyB_DOAebHbAvs_A3vcY7j5-emd-dqYGRu4' + '&language=ko')
+.then((response) => response.json())
+.then((responseJson) => {
+    setReg4(responseJson.results[0].formatted_address);
+}).catch((err) => console.log("udonPeople error : " + err));
+
   return (
     <View style={styles.container} onPress={Keyboard.dismiss}>
       <View style={styles.header}>
@@ -120,13 +121,13 @@ if (!location) {
       </View>
 
       <View style={{ width: '90%', }}>
-        <ModalView /*reg1={reg1} getData={getData} reg2={reg2} getData2={getData2} */
-        reg3={reg3} getAddress={getAddress} getAddress2={getAddress2}/>
+        <ModalView reg1={reg1} getData={getData} reg2={reg2} getData2={getData2}
+        reg3={reg3} getAddress1={getAddress1} getAddress2={getAddress2}/>
       </View>
     
       <View style={styles.content1}>
-        <SearchBar1 reg1={reg1} getData={getData} reg4={reg3.address} curr={curr}/>
-        <SearchBar2 reg2={reg2} getData2={getData2} />
+        <SearchBar1 reg1={reg1} getData={getData} reg4={reg4} reg3={reg3}/>
+        <SearchBar2 reg2={reg2} getData2={getData2} reg5={reg5}/>
       </View>
 
       <View style={styles.content}>
@@ -170,16 +171,7 @@ if (!location) {
           <Marker
               coordinate={{latitude: location.latitude, longitude: location.longitude}}
               title={"현재 위치"}
-              draggable={true}
-              onPress={() => { //현재 위치 한글 주소 콘솔창에 띄우기, 출발지 도착지 위치도 다 똑같은 곳을 가리키고 있어 3번 터치해야 함
-                  fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.latitude + ',' + location.longitude
-                  + '&key=AIzaSyAx0vC5rUuV7PT72y03BDwK79Yu2ByP3Hw' + '&language=ko')
-                .then((response) => response.json())
-                .then((responseJson) => {
-                  curr.address = responseJson.results[0].formatted_address;
-                  console.log(responseJson.results[0].formatted_address);
-                }).catch((err) => console.log("udonPeople error : " + err));
-              }}>
+              draggable={true} >
                 <Image source={require('../../assets/imgs/placeholder_danger.png')} style={{ width: 40, height: 40 }}></Image>
           </Marker>
           <Circle

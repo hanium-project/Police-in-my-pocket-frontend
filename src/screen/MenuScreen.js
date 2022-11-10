@@ -123,13 +123,13 @@ const MapExample = ({navigation}) => {
         <View style={{flexDirection: 'row'}}>
           <Toggle/>
           <View>
-          <Text style={{
-              fontFamily:'GmarketSansTTFMedium',
-              color: 'white',
-              marginTop: '4%',
-              fontSize: 13,
-              marginLeft: '37%'
-            }}>OOO님, 환영합니다.</Text>
+            <Text style={{
+                fontFamily:'GmarketSansTTFMedium',
+                color: 'white',
+                marginTop: '4%',
+                fontSize: 13,
+                marginLeft: '37%'
+              }}>OOO님, 환영합니다.</Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={{
                 fontFamily:'GmarketSansTTFMedium',

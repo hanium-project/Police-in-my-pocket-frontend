@@ -21,7 +21,7 @@ async function requestPermission() {
     }
 }
 
-const SearchBar1 = ({reg1, getData, reg3, reg4}) =>  {
+const ModalSearchBar = ({getData,}) =>  {
   const [location, setLocation] = useState();
   const ref = useRef();
 
@@ -58,23 +58,18 @@ const SearchBar1 = ({reg1, getData, reg3, reg4}) =>  {
   return (
     <View style={[styles.block, {width: '90%'}, {height: '63%'}, {marginEnd:'6%'}]}>
       <GooglePlacesAutocomplete
-          placeholder={reg3 !== 1? reg3.toString() : reg4.toString()}
-          //reg3이 모달에서 받아오는 출발지 한글 주소
-          //reg4가 현재 사용자의 위치 한글 주소임
-          //이거를 textValue로 받아오는 게 원래 해야할 일!!!!!
-          //이거 안되면 지금 placeholder를 x 누르면 remove 되게 하기
+          placeholder={'주요 목적지를 입력하세요.'}
           minLength={2}
           returnKeyType={'search'}
           fetchDetails={true}
-          ref={input => {this.googleInput = input}}
+          ref={input => {this.googleInput3 = input}}
           renderRightButton={() => (
             <TouchableOpacity onPress={() => {
-              this.googleInput.value = null;
-              this.googleInput.clear();
-              getData({
+              this.googleInput3.clear();
+              /*getData({
                 latitude: location.latitude,
                 longitude: location.longitude
-              }) }
+              })*/ }
             }>
               <Image
                 source={require('../../assets/imgs/clear1.png')}
@@ -86,15 +81,15 @@ const SearchBar1 = ({reg1, getData, reg3, reg4}) =>  {
           onPress={(data, details = null) => {
               // 'details' is provided when fetchDetails = trued
               console.log(data.description);  //한글 주소
-              console.log("출발지 위도: " + details.geometry.location.lat); //위도 추출
-              console.log("출발지 경도: " + details.geometry.location.lng); //경도 추출
+              console.log("목적지 위도: " + details.geometry.location.lat); //위도 추출
+              console.log("목적지 경도: " + details.geometry.location.lng); //경도 추출
 
-              getData({
+              /*getData({
                 latitude: details.geometry.location.lat,
                 longitude: details.geometry.location.lng,
                 latitudeDelta: 0.011,
                 longitudeDelta: 0.011
-              })
+              })*/
           }}
           listViewDisplayed={false}
           query={{
@@ -120,4 +115,4 @@ const SearchBar1 = ({reg1, getData, reg3, reg4}) =>  {
   );
 }
 
-export default SearchBar1;
+export default ModalSearchBar;
