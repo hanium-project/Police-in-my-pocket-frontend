@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
 import {
-  Platform,
   View,
   StyleSheet,
   TextInput,
-  SafeAreaView,
-  TouchableOpacity,
   Text,
-  Component,
-  Image,
   TouchableHighlight
 } from 'react-native';
 
@@ -18,17 +13,17 @@ const FindPw  = ({navigation}) => {
   const [titleText, setTitleText] = useState('비밀번호 찾기');
   return(
   <View style={styles.container}>
-  <Text
-  style={{
-    fontFamily: 'GmarketSansTTFMedium',
-    color: '#FFFFFF',
-    fontSize: 18,
-    marginTop: 20,
-      }}>
-    {titleText}
-</Text>
-<View style={styles.header}>
-<TextInput
+    <Text
+      style={{
+        fontFamily: 'GmarketSansTTFMedium',
+        color: '#FFFFFF',
+        fontSize: 18,
+        marginTop: 20,}}>
+      {titleText}
+    </Text>
+    
+    <View style={styles.header}>
+      <TextInput
         style={{
           width: '58%',
           height: '65%',
@@ -41,21 +36,21 @@ const FindPw  = ({navigation}) => {
           fontStyle: 'normal',
           flexDirection: 'row',
         }}
-       onChangeText={onChangeNumber}
+        onChangeText={onChangeNumber}
         value={text}
-        placeholder="아이디 입력(E-MAIL)"
-      />
-         <TouchableHighlight>
-        <View style={styles.button}>
-          <Text style={styles.text} onPress={() => navigation.navigate('Menu')}>
-           { "인증 메일 \n 보내기"}
-          </Text>
-        </View>
-      </TouchableHighlight>
-      </View>
-</View>
-  );
-}
+        placeholder="아이디 입력(E-MAIL)"/>
+
+        <TouchableHighlight>
+          <View style={styles.button}>
+            <Text style={styles.text} onPress={() => navigation.navigate('Menu')}>
+              { "인증 메일 \n 보내기"}
+            </Text>
+          </View>
+        </TouchableHighlight>
+        
+    </View>
+  </View>
+);}
 
 const styles = StyleSheet.create({
   header: {
@@ -78,7 +73,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#709eff',
   },

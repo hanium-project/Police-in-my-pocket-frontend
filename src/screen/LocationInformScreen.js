@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE, } from 'react-native-maps';
 import styled from 'styled-components';

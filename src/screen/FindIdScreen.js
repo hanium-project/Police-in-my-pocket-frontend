@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
 import {
-  Platform,
   View,
   StyleSheet,
   TextInput,
-  SafeAreaView,
-  TouchableOpacity,
   Text,
-  Component,
-  Image,
   TouchableHighlight
 } from 'react-native';
 
@@ -18,17 +13,17 @@ const FindId  = ({navigation}) => {
   const [titleText, setTitleText] = useState('아이디 찾기');
   return(
   <View style={styles.container}>
-  <Text
-  style={{
-    fontFamily: 'GmarketSansTTFMedium',
-    color: '#FFFFFF',
-    fontSize: 18,
-    marginTop: '5%',
-      }}>
-    {titleText}
-</Text>
-<View style={styles.header}>
-<TextInput
+    <Text
+      style={{
+        fontFamily: 'GmarketSansTTFMedium',
+        color: '#FFFFFF',
+        fontSize: 18,
+        marginTop: '5%',}}>
+      {titleText}
+    </Text>
+
+    <View style={styles.header}>
+      <TextInput
         style={{
           width: '56%',
           height: '57%',
@@ -40,29 +35,28 @@ const FindId  = ({navigation}) => {
           fontFamily: 'GmarketSansTTFMedium',
           fontStyle: 'normal',
           flexDirection: 'row'
-        }}
-       onChangeText={onChangeNumber}
+          }}
+        onChangeText={onChangeNumber}
         value={text}
-        placeholder="휴대폰 번호 (숫자만 입력)"
-      />
-         <TouchableHighlight>
+        placeholder="휴대폰 번호 (숫자만 입력)"/>
+
+      <TouchableHighlight>
         <View style={styles.button}>
           <Text style={styles.text} onPress={() => navigation.navigate('Menu')}>
             인증번호
           </Text>
         </View>
       </TouchableHighlight>
-      </View>
+  </View>
+
   <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="인증번호 입력"
-        secureTextEntry={true}
-      />
+    style={styles.input}
+    onChangeText={onChangeNumber}
+    value={number}
+    placeholder="인증번호 입력"
+    secureTextEntry={true}/>
 </View>
-  );
-}
+);}
 
 const styles = StyleSheet.create({
   header: {
@@ -95,14 +89,11 @@ const styles = StyleSheet.create({
     fontFamily: 'GmarketSansTTFMedium',
     fontStyle: 'normal',
   },
-
   container: {
     flex: 1,
-    // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#709eff',
   },
-
   text: {
     fontSize: 13,
     fontFamily: 'GmarketSansTTFMedium',
@@ -110,6 +101,5 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     alignItems: 'center',
   }
-}
-  );
+});
 export default FindId;
