@@ -3,7 +3,7 @@
 1. Clone this project
     
     ```
-    git clone https://github.com/Techeer3-Spring-Study/TAB-Frontend.git
+    git clone https://github.com/hanium-project/Police-in-my-pocket-frontend.git
     ```
     
 2. node module install
