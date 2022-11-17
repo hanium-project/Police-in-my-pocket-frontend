@@ -24,7 +24,7 @@ async function requestPermission() {
   }
 }
 
-const MainScreen = () => {
+const MainScreen = ({navigation}) => {
   const [location, setLocation] = useState();
   const ref = useRef();
   const [reg1, setReg1] = React.useState({
@@ -108,15 +108,15 @@ fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.la
               marginLeft: 10,
               marginTop: 10,
               }}>
-          <Text style={styles.title}>Police In My Pocket 안심귀가 서비스</Text>
+          <Text style={[styles.title, {fontSize: 20}]} onPress={() => navigation.pop()}> ＜ </Text>
+          <Text style={styles.title} > Police In My Pocket 안심귀가 서비스 </Text>
           <Image
-            source={require('../../assets/imgs/police-car.png')}
-            style={{
-              width: 25,
-              height: 18,
-              marginLeft: 8,
-            }}
-          />
+              source={require('../../assets/imgs/police-car.png')}
+              style={{
+                width: 25,
+                height: 18,
+                marginLeft: 8,
+            }} />
         </View>
       </View>
 

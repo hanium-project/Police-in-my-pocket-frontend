@@ -107,13 +107,23 @@ const MapExample = ({navigation}) => {
   return (
     <>
       <View style={{flexDirection: 'row', backgroundColor: '#709eff',}}>
+        <View style={{
+          marginTop: '4%',
+        }}>
+          <Text style={{
+          fontFamily:'GmarketSansTTFMedium',
+          color: 'white',
+          fontSize: 20,
+          marginLeft: 10,
+          }} onPress={() => navigation.pop()}> ＜ </Text>
+        </View>
         <View>
           <Text style={{
               fontFamily:'GmarketSansTTFMedium',
               color: 'white',
               marginTop: '4%',
               fontSize: 13,
-              marginLeft: '60%'
+              marginLeft: '55%'
             }}>OOO님, 환영합니다.</Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={{
@@ -121,7 +131,7 @@ const MapExample = ({navigation}) => {
                 color: 'white',
                 marginTop: '1%',
                 fontSize: 10,
-                marginLeft: '60%'
+                marginLeft: '55%'
             }}>로그아웃 </Text>
             <Text style={{
                 fontFamily:'GmarketSansTTFMedium',
