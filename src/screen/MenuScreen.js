@@ -7,7 +7,9 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import ReportModal from '../component/ReportModal';
 import Sound from 'react-native-sound';
 import Toggle from '../component/Toggle';
-import ToggleSwitch from 'toggle-switch-react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const ViewContainerMap = styled.View`
   flex: 1.1;
@@ -68,6 +70,8 @@ async function requestPermission() {
 
 const MapExample = ({navigation}) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [location, setLocation] = useState();
+
   let controlLocal;
   let localSound = require('../../assets/sounds/siren.mp3');
 
@@ -82,6 +86,7 @@ const MapExample = ({navigation}) => {
        return;
      }
       setModalOpen(true)
+      sendMessage()
      controlLocal.play(() => {
        controlLocal.release();
      });
@@ -95,7 +100,7 @@ const MapExample = ({navigation}) => {
       });
   }
 
-  const [location, setLocation] = useState();
+
   useEffect(() => {
     requestPermission().then(result => {
       console.log({ result });
@@ -116,6 +121,26 @@ const MapExample = ({navigation}) => {
       }
     });
   }, []);
+
+  const sendMessage = async () => {
+    const token = await AsyncStorage.getItem('accessToken');
+    console.log('token', token);
+    axios(
+      {
+          url: 'http://10.0.2.2/api/v1/emergency/01024907323',
+          method: 'post',
+          headers: {
+              contentType: 'application/json',
+              Authorization: `Bearer ${token}`
+          }
+      }
+    ).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
 
   return (
     <>
@@ -203,10 +228,10 @@ const MapExample = ({navigation}) => {
               showsUserLocation={true}
               provider={PROVIDER_GOOGLE}
               initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                //latitude: location.latitude,
-                //longitude: location.longitude,
+                //latitude: 37.78825,
+                //longitude: -122.4324,
+                latitude: location.latitude,
+                longitude: location.longitude,
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005,
               }}    

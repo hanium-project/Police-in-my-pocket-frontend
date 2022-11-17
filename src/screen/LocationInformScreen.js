@@ -73,6 +73,8 @@ async function requestPermission() {
 const MapExample = ({navigation}) => {
   const [location, setLocation] = useState();
   const changeLocation = useRef(null);
+  const [dangerLocations, setDangerLocations] = useState();
+  const [safeLocations, setSafeLocations] = useState();
 
   useEffect(() => {
     requestPermission().then(result => {
@@ -92,6 +94,23 @@ const MapExample = ({navigation}) => {
           },
         );
       }
+    })
+
+    const token = AsyncStorage.getItem('accessToken');
+    console.log('token', token);
+    axios(
+      {
+          url: 'http://10.0.2.2/api/v1/emergency',
+          method: 'get',
+          headers: {
+              contentType: 'application/json',
+              Authorization: `Bearer ${token}`
+          }
+      }
+    ).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.log(error);
     });
   }, []);
 
@@ -249,8 +268,8 @@ const MapExample = ({navigation}) => {
                         height: 50,
                         margin: '3%'
                     }}></Image>
-                <View><ListCustomFont>대학원</ListCustomFont>
-                    <CountCustomFont>위험 발생 건수 : n회</CountCustomFont>
+                <View><ListCustomFont>위험 지역</ListCustomFont>
+                    <CountCustomFont>위험 발생 건수 : 1회</CountCustomFont>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => console.log('safe location click')} style={{flexDirection: 'row',}}>
@@ -260,7 +279,7 @@ const MapExample = ({navigation}) => {
                         height: 50,
                         margin: '3%'
                     }}></Image>
-                <View><ListCustomFont>송송식탁</ListCustomFont>
+                <View><ListCustomFont>동덕여대 경비실</ListCustomFont>
                     <CountCustomFont>치안 시설</CountCustomFont>
                 </View>
             </TouchableOpacity>
@@ -271,8 +290,8 @@ const MapExample = ({navigation}) => {
                         height: 50,
                         margin: '3%'
                     }}></Image>
-                <View><ListCustomFont>교수님의 연구동</ListCustomFont>
-                    <CountCustomFont>위험 발생 건수 : n회</CountCustomFont>
+                <View><ListCustomFont>어두운 골목길</ListCustomFont>
+                    <CountCustomFont>위험 발생 건수 : 32회</CountCustomFont>
                 </View>
             </TouchableOpacity>
             </ScrollView>
