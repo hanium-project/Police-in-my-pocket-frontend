@@ -77,7 +77,7 @@ Number.prototype.zf = function (len) {
   return this.toString().zf(len);
 };
 
-const App = () => {
+const App = ({navigation}) => {
   const [titleText, setTitleText] = useState('회원가입');
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -145,20 +145,26 @@ const App = () => {
   return (
     <ScrollView style={styles.container}>
 
-      <View style={styles.header}>
-        <Text style={styles.titleText}>
-          {'\n'}
-          {titleText}
-          {'\n'}
-        </Text>
-        <Image
-          source={require('../../assets/imgs/user.png')}
-          style={{
-            width: 30,
-            height: 30,
-            marginLeft: 10,
-          }}
-        />
+      <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={[styles.header, {flex: 1}]} >
+          <Text style={[styles.titleText, {alignItems: 'flex-start', marginRight: -10}]}
+          onPress={() => navigation.pop()}>  ＜ </Text>
+        </View>
+        <View style={styles.header}>
+          <Text style={styles.titleText} >
+          {'\n'} 
+            {titleText}
+            {'\n'}
+          </Text>
+          <Image
+            source={require('../../assets/imgs/user.png')}
+            style={{
+              width: 25,
+              height: 25,
+              marginLeft: -5
+            }}
+          />
+        </View>
       </View>
 
       <TextInput
@@ -283,12 +289,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+    flex: 3,
   },
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
     fontFamily: 'GmarketSansTTFMedium',
+    marginLeft: -60,
   },
   textInput: {
     margin: '2%',

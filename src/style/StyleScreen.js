@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     },
     title: {
         alignSelf: 'flex-start',
-        fontSize: 30,
+        fontSize: 25,
         color: '#ffffff',
         marginTop: -20,
         marginBottom: 15,

@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
-  TextInput, 
-  StyleSheet,  
+  TextInput,  
   View, 
   Text,  
   Pressable,
@@ -15,15 +14,15 @@ import {styles} from '../style/StyleScreen';
 
 var {width} = Dimensions.get('window');
 
-const AddressApp = () => {
+const AddressApp = ({navigation}) => {
 
   return (     
     <View style = {styles.container}>
       <View style = {styles.header}>
-        <Text style = {styles.title}>
-          {"\r"}주요 목적지/연락처 등록{"\r"}
+        <Text style = {styles.title} onPress={() => navigation.pop()}>
+           ＜ 주요 목적지/연락처 등록{"\r"}
           <TouchableHighlight onPress={() =>Linking.openURL('https://www.google.co.kr/')}>
-            <Image style ={{width: 30, height: 30, alignSelf: 'flex-end'}} source = {require('../../assets/imgs/user.png')}/>
+            <Image style ={{width: 20, height: 20, alignSelf: 'flex-end'}} source = {require('../../assets/imgs/user.png')}/>
           </TouchableHighlight>
           {"\n\n\n"}
           </Text>
