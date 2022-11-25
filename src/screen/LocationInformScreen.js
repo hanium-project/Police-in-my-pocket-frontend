@@ -4,6 +4,7 @@ import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE, } from 'react-native-maps';
 import styled from 'styled-components';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import { styles } from '../style/StyleScreen';
 
 const ViewContainerMap = styled.View`
   flex: 1;
@@ -110,21 +111,10 @@ const MapExample = ({navigation}) => {
         <View style={{
           marginTop: '4%',
         }}>
-          <Text style={{
-          fontFamily:'GmarketSansTTFMedium',
-          color: 'white',
-          fontSize: 20,
-          marginLeft: 10,
-          }} onPress={() => navigation.pop()}> ＜ </Text>
+          <Text style={styles.informText} onPress={() => navigation.pop()}> ＜ </Text>
         </View>
         <View>
-          <Text style={{
-              fontFamily:'GmarketSansTTFMedium',
-              color: 'white',
-              marginTop: '4%',
-              fontSize: 13,
-              marginLeft: '55%'
-            }}>OOO님, 환영합니다.</Text>
+          <Text style={styles.informText1}>OOO님, 환영합니다.</Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={{
                 fontFamily:'GmarketSansTTFMedium',
@@ -133,40 +123,17 @@ const MapExample = ({navigation}) => {
                 fontSize: 10,
                 marginLeft: '55%'
             }}>로그아웃 </Text>
-            <Text style={{
-                fontFamily:'GmarketSansTTFMedium',
-                color: 'white',
-                marginTop: '1%',
-                fontSize: 10,
-            }}>마이페이지</Text>
+            <Text style={styles.informText2}>마이페이지</Text>
           </View>
         </View>
         <Image source={require('../../assets/imgs/user2.png')}
-          style={{
-            width: '5%',
-            height: '55%',
-            marginTop: '4%',
-            marginLeft: -15
-          }}></Image>
+          style={styles.informImg}></Image>
       </View>
       <ViewContainerMap>
         <View style={{flexDirection: 'row', marginBottom: '1%', alignItems: 'flex-end', }}>
-          <Text style={{
-            color: 'white',
-            marginLeft: '5%',
-            fontSize: 17,
-            fontFamily: 'GmarketSansTTFMedium',
-          }}>실시간 위험 지역 / 치안 시설 정보</Text>
+          <Text style={styles.informTitle}>실시간 위험 지역 / 치안 시설 정보</Text>
           </View>
-          <View style={{
-            padding: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 10,
-            backgroundColor: 'white',
-            width: '95%',
-            marginLeft: '2.7%'
-          }}>
+          <View style={styles.informView}>
             <MapView.Animated
               style={{
                 width: '100%',
@@ -179,8 +146,6 @@ const MapExample = ({navigation}) => {
               initialRegion={{
                 latitude: 37.78825,
                 longitude: -122.4324,
-                //latitude: location.latitude,
-                //longitude: location.longitude,
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005,
               }}    
