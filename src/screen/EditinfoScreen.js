@@ -18,11 +18,17 @@ const App = ({navigation}) => {
   return (
     <View style={styles.editContainer}>
       <View style={styles.editHeader}>
+      <View style={{flexDirection: 'row', alignSelf: 'flex-start', width: '100%',
+              height: 20,
+              marginLeft: 30,
+              marginTop: 15,
+              }}>
+        <Text style={[styles.mainTitle, {fontSize: 20}]} onPress={() => navigation.pop()}> ＜ </Text>        
         <Text style={styles.editTitleText}>
-          {'\n'}
           {titleText}
           {'\n'}
         </Text>
+        </View>
       </View>
 
       <TextInput

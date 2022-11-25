@@ -7,7 +7,6 @@ import FindPw from "./FindPwScreen";
 const Tab = createMaterialTopTabNavigator();
 
 const Find  = ({navigation}) => {
-    const [titleText, setTitleText] = useState('아이디 찾기');
     
     return (
         <Tab.Navigator 

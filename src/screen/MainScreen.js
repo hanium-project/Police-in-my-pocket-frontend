@@ -7,6 +7,7 @@ import MyButton from '../component/MyButton';
 import ModalView from '../component/ModalView';
 import SearchBar1 from '../component/SearchBar1';
 import SearchBar2 from '../component/SearchBar2';
+import {styles} from '../style/StyleScreen';
 
 async function requestPermission() {
   try {
@@ -101,15 +102,15 @@ fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.la
 }).catch((err) => console.log("udonPeople error : " + err));
 
   return (
-    <View style={styles.container} onPress={Keyboard.dismiss}>
-      <View style={styles.header}>
+    <View style={styles.mainContainer} onPress={Keyboard.dismiss}>
+      <View style={styles.mainHeader}>
         <View style={{flexDirection: 'row', alignSelf: 'flex-start', width: '100%',
               height: 20,
               marginLeft: 10,
               marginTop: 10,
               }}>
-          <Text style={[styles.title, {fontSize: 20}]} onPress={() => navigation.pop()}> ＜ </Text>
-          <Text style={styles.title} > Police In My Pocket 안심귀가 서비스 </Text>
+          <Text style={[styles.mainTitle, {fontSize: 20}]} onPress={() => navigation.pop()}> ＜ </Text>
+          <Text style={styles.mainTitle} > Police In My Pocket 안심귀가 서비스 </Text>
           <Image
               source={require('../../assets/imgs/police-car.png')}
               style={{
@@ -125,12 +126,12 @@ fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.la
         reg3={reg3} getAddress1={getAddress1} getAddress2={getAddress2}/>
       </View>
     
-      <View style={styles.content1}>
+      <View style={styles.mainContent1}>
         <SearchBar1 reg1={reg1} getData={getData} reg4={reg4} reg3={reg3}/>
         <SearchBar2 reg2={reg2} getData2={getData2} reg5={reg5}/>
       </View>
 
-      <View style={styles.content}>
+      <View style={styles.mainContent}>
         <MapView
           style={{
             width: '90%',
@@ -160,19 +161,22 @@ fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.la
             //모달창에서 보낸 한글 주소 메인에서 읽어들이기
             title={reg3.address}
             >
-              <Image source={require('../../assets/imgs/placeholder.png')} style={{ width: 40, height: 40 }}></Image>
+              <Image source={require('../../assets/imgs/placeholder.png')} 
+                style={{ width: 40, height: 40 }}></Image>
           </Marker>
           <Marker
             coordinate={{latitude: reg2.latitude, longitude: reg2.longitude}}
             //title={"도착지 위치"}
              >
-              <Image source={require('../../assets/imgs/placeholder_safe.png')} style={{ width: 40, height: 40 }}></Image>
+              <Image source={require('../../assets/imgs/placeholder_safe.png')} 
+                style={{ width: 40, height: 40 }}></Image>
           </Marker>
           <Marker
               coordinate={{latitude: location.latitude, longitude: location.longitude}}
               title={"현재 위치"}
               draggable={true} >
-                <Image source={require('../../assets/imgs/placeholder_danger.png')} style={{ width: 40, height: 40 }}></Image>
+                <Image source={require('../../assets/imgs/placeholder_danger.png')} 
+                  style={{ width: 40, height: 40 }}></Image>
           </Marker>
           <Circle
             center={{latitude: (reg1.latitude + reg2.latitude) / 2, longitude: (reg1.longitude + reg2.longitude) / 2}}
@@ -183,7 +187,7 @@ fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.la
         </MapView>
       </View>
     
-      <View style={styles.footer}>
+      <View style={styles.mainFooter}>
         <Text
           style={{
             color: '#FFFFFF',
@@ -198,59 +202,5 @@ fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.la
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#6799FF',
-  },
-  header: {
-    width: '100%',
-    height: '5%',
-    alignSelf: 'flex-start',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
-  content1: {
-    width: '100%',
-    height: '20%',
-  },
-  content: {
-    width: '90%',
-    height: '55%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-    overflow: 'hidden',
-    backgroundColor: 'white',
-    marginTop: 4
-  },
-  footer: {
-    width: '100%',
-    height: '15%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    alignSelf: 'flex-start',
-    fontSize: 16,
-    color: '#ffffff',
-    marginBottom: 3,
-    fontFamily: 'GmarketSansTTFMedium',
-  },
-  block: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
-    marginLeft: 20,
-},
-});
 
 export default MainScreen;
