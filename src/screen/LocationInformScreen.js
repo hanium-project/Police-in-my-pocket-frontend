@@ -4,6 +4,8 @@ import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE, } from 'react-native-maps';
 import styled from 'styled-components';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const ViewContainerMap = styled.View`
   flex: 1;
