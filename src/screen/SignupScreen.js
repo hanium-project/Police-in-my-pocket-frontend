@@ -11,6 +11,7 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import RadioForm from 'react-native-simple-radio-button';
 import axios from 'axios'
+import { HelperText } from 'react-native-paper';
 
 var gender = [
   {value: 'man', label: '남'},
@@ -89,6 +90,40 @@ const App = ({navigation}) => {
   const [code, setCode] = useState();
   const [text, onChangeText] = useState('');
 
+  const emailRegEx =   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
+  const passwordRegEx = /^[A-Za-z0-9]{6,15}$/  
+   //비밀번호는 영어 혹은 숫자로 시작하며, 최소 6자리 최대 15자리
+
+  const emailCheck = (id) => {
+    if(emailRegEx.test(id)) { //형식에 맞지 않을 경우 아래 콘솔 출력
+      //console.log('이메일 형식이 맞아요');
+      return false;
+    }else{ // 맞을 경우 출력
+      //console.log('이메일 형식이 틀려요');
+      return true;
+    }
+  };
+
+  const passwordCheck = (password) => {
+    if(passwordRegEx.test(password)) { //형식에 맞지 않을 경우 아래 콘솔 출력
+      //console.log('비밀번호 형식이 맞아요');
+      return false;
+    }else{ // 맞을 경우 출력
+      //console.log('비밀번호 형식이 틀려요');
+      return true;
+    }
+  };
+
+  const passwordDoubleCheck = (password, checkpw) => {
+    if(password !== checkpw){
+      //console.log('비밀번호가 다릅니다.');
+      return true;
+    }else{
+      //console.log('비밀번호가 동일합니다');
+      return false;
+    }
+  };
+
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -137,7 +172,7 @@ const App = ({navigation}) => {
         console.log(error);
         //alert("fail");
       });
-    } else {
+    } else{
       return alert('비밀번호가 일치하지 않습니다');
     }
   }
@@ -174,17 +209,27 @@ const App = ({navigation}) => {
         labelStyle={{marginLeft: 10}}
         placeholderTextColor="white"
         onChangeText={text => setId(text)}
+        onChange={(e)=>{setId(e.nativeEvent.value); 
+          emailCheck(e.nativeEvent.text)}} 
         value={id}
       />
+      <HelperText type="error" visible={emailCheck(id)} >
+        아이디 형식이 맞지 않습니다.
+      </HelperText>
 
       <TextInput
         style={styles.textInput}
         placeholder="비밀번호"
         placeholderTextColor="white"
         onChangeText={text => setPassword(text)}
+        onChange={(e)=>{setPassword(e.nativeEvent.value); 
+          passwordCheck(e.nativeEvent.text)}} 
         value={password}
         secureTextEntry={true}
       />
+      <HelperText type="error" visible={passwordCheck(password)} >
+        비밀번호 형식이 맞지 않습니다.
+      </HelperText>
 
       <TextInput
         style={styles.textInput}
@@ -194,6 +239,9 @@ const App = ({navigation}) => {
         value={checkpw}
         secureTextEntry={true}
       />
+      <HelperText type="error" visible={passwordDoubleCheck(password, checkpw)} >
+        위의 비밀번호와 같지 않습니다.
+      </HelperText>
 
       <TextInput
         style={styles.textInput}
