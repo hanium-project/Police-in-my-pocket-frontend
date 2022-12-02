@@ -13,15 +13,21 @@ const EditPw  = ({navigation}) => {
   const [titleText, setTitleText] = useState('비밀번호 변경');
   return(
   <View style={styles.editContainer}>
+    <View style={{flexDirection: 'row', alignSelf: 'flex-start', width: '100%',
+        height: 20,
+        marginLeft: 10,
+        marginTop: 15,
+      }}>
+        <Text style={[styles.mainTitle, {fontSize: 20}]} onPress={() => navigation.pop()}> ＜ </Text>       
     <Text
     style={{
       fontFamily: 'GmarketSansTTFMedium',
       color: '#FFFFFF',
       fontSize: 18,
-      marginTop: 20,
         }}>
       {titleText}
     </Text>
+    </View>
 
     <View style={styles.editHeader}>
       <TextInput

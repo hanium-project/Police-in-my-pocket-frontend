@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import { Text, View, Image} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import styled from 'styled-components';
@@ -9,7 +9,8 @@ import Sound from 'react-native-sound';
 import Toggle from '../component/Toggle';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import ToggleSwitch from 'toggle-switch-react-native';
+import {styles} from '../style/StyleScreen';
 
 const ViewContainerMap = styled.View`
   flex: 1.1;
@@ -37,20 +38,7 @@ const ButtonCustomFont = styled.Text`
   fontFamily: GmarketSansTTFMedium;
   marginLeft: 3%;
   color: black;
-`
-
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    padding: '3%',
-    margin: '2%',
-    flexDirection: 'row',
-    borderRadius: 10,
-    width: '95%',
-    marginLeft: '2.7%',
-  },
-});
+`;
 
 async function requestPermission() {
   try {
@@ -148,46 +136,22 @@ const MapExample = ({navigation}) => {
         <View style={{flexDirection: 'row'}}>
           <Toggle/>
           <View>
-            <Text style={{
-                fontFamily:'GmarketSansTTFMedium',
-                color: 'white',
-                marginTop: '4%',
-                fontSize: 13,
-                marginLeft: '37%'
-              }}>OOO님, 환영합니다.</Text>
+            <Text style={[styles.informText1, { marginLeft: '37%'
+              }]}>OOO님, 환영합니다.</Text>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{
-                fontFamily:'GmarketSansTTFMedium',
-                color: 'white',
-                marginTop: '1%',
-                fontSize: 10,
-                marginLeft: '37%'
-            }}>로그아웃 </Text>
-            <Text style={{
-                fontFamily:'GmarketSansTTFMedium',
-                color: 'white',
-                marginTop: '1%',
-                fontSize: 10,
-            }} onPress={() => navigation.navigate('MyPage')}>마이페이지</Text>
+            <Text style={[styles.informText2, { marginLeft: '37%'
+            }]}>로그아웃 </Text>
+            <Text style={styles.informText2} onPress={() => navigation.navigate('MyPage')}>마이페이지</Text>
           </View>
           </View>
         </View>
         <Image source={require('../../assets/imgs/user2.png')}
-          style={{
-            width: '5%',
-            height: '55%',
-            marginTop: '4%',
-            marginLeft: -40
-          }}></Image>
+          style={[styles.informImg, { marginLeft: -40
+          }]}></Image>
       </View>
       <ViewContainerMap>
         <View style={{flexDirection: 'row', marginBottom: '1%', alignItems: 'flex-end', }}>
-          <Text style={{
-            color: 'white',
-            marginLeft: '5%',
-            fontSize: 17,
-            fontFamily: 'GmarketSansTTFMedium',
-          }}>현재 위치 안내</Text>
+          <Text style={styles.informTitle}>현재 위치 안내</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Image source={require('../../assets/imgs/placeholder.png')}
             style={{
@@ -210,15 +174,7 @@ const MapExample = ({navigation}) => {
           <MarkerCustomFont>치안 시설</MarkerCustomFont>
           </View>
           </View>
-          <View style={{
-            padding: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 10,
-            backgroundColor: 'white',
-            width: '95%',
-            marginLeft: '2.7%'
-          }}>
+          <View style={styles.informView}>
             <MapView
               style={{
                 width: '100%',
@@ -230,8 +186,6 @@ const MapExample = ({navigation}) => {
               initialRegion={{
                 latitude: 37.78825,
                 longitude: -122.4324,
-                //latitude: location.latitude,
-                //longitude: location.longitude,
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005,
               }}    
@@ -265,7 +219,7 @@ const MapExample = ({navigation}) => {
           <ReportModal navigation={navigation} modalFunction={modalFunction}></ReportModal>
           : null
         }
-        <TouchableOpacity style={styles.button} onPress={playSound_Local}>
+        <TouchableOpacity style={styles.menuBtn} onPress={playSound_Local}>
           <Image
             source={require('../../assets/imgs/siren.png')}
             style={{
@@ -275,7 +229,7 @@ const MapExample = ({navigation}) => {
             }}></Image>
         <ButtonCustomFont style={{fontSize: 12.6}}>긴급상황 발생! 인근 파출소 혹은 가족에게 신고하기</ButtonCustomFont>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}
+        <TouchableOpacity style={styles.menuBtn}
         onPress={() => navigation.navigate('Main')}>
           <Image
             source={require('../../assets/imgs/police-car.png')}
@@ -286,7 +240,7 @@ const MapExample = ({navigation}) => {
             }}></Image>
           <ButtonCustomFont>안심 귀가 서비스 이용하기</ButtonCustomFont>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}
+        <TouchableOpacity style={styles.menuBtn}
         onPress={() => navigation.navigate('Address')}>
           <Image
             source={require('../../assets/imgs/open-book.png')}
@@ -297,7 +251,7 @@ const MapExample = ({navigation}) => {
             }}></Image>
           <ButtonCustomFont>주요 연락처 및 목적지 등록하기</ButtonCustomFont>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}
+        <TouchableOpacity style={styles.menuBtn}
          onPress={() => navigation.navigate('Location')}>
           <Image
             source={require('../../assets/imgs/sign.png')}
