@@ -7,6 +7,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import ReportModal from '../component/ReportModal';
 import Sound from 'react-native-sound';
 import Toggle from '../component/Toggle';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {styles} from '../style/StyleScreen';
 
@@ -56,6 +58,8 @@ async function requestPermission() {
 
 const MapExample = ({navigation}) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [location, setLocation] = useState();
+
   let controlLocal;
   let localSound = require('../../assets/sounds/siren.mp3');
 
@@ -70,6 +74,7 @@ const MapExample = ({navigation}) => {
        return;
      }
       setModalOpen(true)
+      sendMessage()
      controlLocal.play(() => {
        controlLocal.release();
      });
@@ -83,7 +88,7 @@ const MapExample = ({navigation}) => {
       });
   }
 
-  const [location, setLocation] = useState();
+
   useEffect(() => {
     requestPermission().then(result => {
       console.log({ result });
@@ -104,6 +109,26 @@ const MapExample = ({navigation}) => {
       }
     });
   }, []);
+
+  const sendMessage = async () => {
+    const token = await AsyncStorage.getItem('accessToken');
+    console.log('token', token);
+    axios(
+      {
+          url: 'http://10.0.2.2/api/v1/emergency/01024907323',
+          method: 'post',
+          headers: {
+              contentType: 'application/json',
+              Authorization: `Bearer ${token}`
+          }
+      }
+    ).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
 
   return (
     <>
