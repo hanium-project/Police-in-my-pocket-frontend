@@ -95,7 +95,7 @@ if (!location) {
 }
 
 fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.latitude + ',' + location.longitude
-+ '&key=AIzaSyB_DOAebHbAvs_A3vcY7j5-emd-dqYGRu4' + '&language=ko')
++ '&key=' + '&language=ko')
 .then((response) => response.json())
 .then((responseJson) => {
     setReg4(responseJson.results[0].formatted_address);
